@@ -7,7 +7,7 @@ http:
 
   routers:
     traefik:
-      rule: "Host(`127.0.0.1`) && PATH(`/traefik`)"
+      rule: "PATH(`/traefik`)"
       service: api@internal
       middlewares:
         - auth

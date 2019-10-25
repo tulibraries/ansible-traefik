@@ -1,6 +1,4 @@
-"""
-Role tests default variables installation.
-"""
+"""Role tests default variables installation."""
 
 import os
 import pytest

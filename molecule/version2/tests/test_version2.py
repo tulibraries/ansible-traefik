@@ -1,6 +1,4 @@
-"""
-Role tests default variables installation.
-"""
+"""Role tests default variables installation."""
 
 import os
 import pytest
@@ -45,7 +43,7 @@ def test_traefik_services(host):
 
 @pytest.mark.parametrize('path,path_type,user,group,mode', [
     ('/etc/traefik', 'directory', 'root', 'root', 0o755),
-    ('/etc/traefik.yml', 'file', 'root', 'root', 0o744,
+    ('/etc/traefik.yml', 'file', 'root', 'root', 0o744),
     ('/etc/traefik-dynamic.yml', 'file', 'root', 'root', 0o744)
     ])
 def test_traefik_paths(host, path, path_type, user, group, mode):
@@ -82,14 +80,3 @@ def test_logging_paths(host, path, path_type, user, group, mode):
     assert current_path.user == user
     assert current_path.group == group
     assert current_path.mode == mode
-
-
-def test_traefik_api(host):
-    """
-    Tests traefik default api / dashboard
-    """
-    resp_noauth = requests.get("http://127.0.0.1:9999/traefik")
-    assert resp_noauth.status_code == 401
-    resp_auth = requests.get("http://test:password@127.0.0.1:9999/traefik")
-    assert resp_auth.status_code == 302
-    assert resp_auth.text.contains('<a href="/dashboard/">Found</a>.')
