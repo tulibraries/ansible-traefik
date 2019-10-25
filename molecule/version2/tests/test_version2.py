@@ -2,7 +2,6 @@
 
 import os
 import pytest
-import requests
 from testinfra.utils.ansible_runner import AnsibleRunner
 
 TESTINFRA_HOSTS = AnsibleRunner(
