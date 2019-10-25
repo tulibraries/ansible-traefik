@@ -1,16 +1,14 @@
-kibatic.traefik
-=========
+tulibraries.traefik
+===================
 
-Ansible role to deploy traefik binary and systemd unit.
-
-[![Build Status](https://travis-ci.org/kibatic/ansible-traefik.svg?branch=master)](https://travis-ci.org/kibatic/ansible-traefik)
+Ansible role to deploy traefik binary and systemd unit. Fork of kibatic.traefik in order to work with Traefik versions 2.x.x.
 
 Træfɪk is a modern HTTP reverse proxy and load balancer made to deploy microservices with ease. It supports several backends (Docker, Swarm, Kubernetes, Marathon, Mesos, Consul, Etcd, Zookeeper, BoltDB, Rest API, file…) to manage its configuration automatically and dynamically.
 
 Installation
 --------------
 
-`$ ansible-galaxy install kibatic.traefik`
+`$ ansible-galaxy install tulibraries.traefik`
 
 Role Variables
 --------------
@@ -29,7 +27,7 @@ traefik_systemd_unit_dest: /etc/systemd/system/traefik.service
 Configuration
 ----------------
 
-Create a custom config file `templates/traefik.toml.j2`.
+Create a custom config file `templates/traefik.toml.j2` or `templates/traefik*.yml.j2`.
 Override template variable (e.g. in `group_vars/all.yml` )
 
 ```yml
@@ -51,7 +49,7 @@ You have to change `traefik_binary_url` or update this role. Then run your playb
 with following **extra vars** :
 
 ```bash
-$ ansible-playbook playbook.yml -t traefik --extra-vars "traefik_update=yes"
+$ ansible-playbook playbook.yml -t traefik --extra-vars "traefik_update=true"
 ```
 
 Use same command if you want to downgrade.

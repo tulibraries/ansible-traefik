@@ -27,28 +27,57 @@
   notify:
     - Restart traefik
 
+- name: Copy traefik dynamic config files (if traevik v2.x.x & file provider)
+  template:
+    src: "{{ item.src }}.j2"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0744
+  notify:
+    - Restart traefik
+  with_items: "{{ traefik_dynamic_configs | list }}"
+  when: traefik_dynamic_configs is defined
+
 - name: Ensure traefik service is stopped before traefik update
   service:
     name: traefik
     state: stopped
-    enabled: yes
-  when: traefik_update == "yes"
+    enabled: true
+  when: traefik_update
 
-- name: Download Traefik binary
+- name: Download Untarred Traefik binary
   get_url:
-    url: "{{ item.url }}"
-    dest: "{{ item.dest }}"
+    url: "{{ traefik_binary_url }}"
+    dest: "{{ traefik_bin_path }}"
     owner: root
     group: root
     mode: 0755
     force: "{{ traefik_update }}"
-  with_items:
-    - url: "{{ traefik_binary_url }}"
-      dest: "{{ traefik_bin_path }}"
+  when: not traefik_binary_url.endswith(".tar.gz")
+
+- name: Download & Expand Tarred Traefik binary
+  unarchive:
+    src: "{{ traefik_binary_url }}"
+    remote_src: true
+    dest: "{{ traefik_tmp_path }}"
+    force: "{{ traefik_update }}"
+  when: traefik_binary_url.endswith(".tar.gz")
+
+- name: Copy Expanded Traefik binary only to bin path
+  copy:
+    src: "{{ traefik_tmp_path }}/traefik"
+    remote_src: true
+    dest: "{{ traefik_bin_path }}"
+    owner: root
+    group: root
+    mode: 0755
+    force: "{{ traefik_update }}"
+  when: traefik_binary_url.endswith(".tar.gz")
 
 - name: Ensure traefik service is enabled and running
   systemd:
     name: traefik
     state: started
-    enabled: yes
-    daemon_reload: yes
+    enabled: true
+    daemon_reload: true
