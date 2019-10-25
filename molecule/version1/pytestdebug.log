@@ -1,0 +1,1033 @@
+versions pytest-4.6.6, py-1.8.0, python-2.7.15.final.0
+cwd=/home/tul08567/Work/src/github.com/tulibraries/ansible-traefik/molecule/version1
+args=['--debug', '-p', 'no:cacheprovider', '--connection=ansible', '--ansible-inventory=/home/tul08567/.cache/molecule/ansible-traefik/version1/inventory/ansible_inventory.yml', '/home/tul08567/Work/src/github.com/tulibraries/ansible-traefik/molecule/version1/tests/test_version1.py', '-vvv']
+
+  pytest_cmdline_main [hook]
+      config: <_pytest.config.Config object at 0x7f609e0e4c50>
+    pytest_plugin_registered [hook]
+        manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+        plugin: <Session version1 exitstatus='<UNSET>' testsfailed=0 testscollected=0>
+    finish pytest_plugin_registered --> [] [hook]
+    pytest_configure [hook]
+        config: <_pytest.config.Config object at 0x7f609e0e4c50>
+    early skip of rewriting module: py._io.terminalwriter [assertion]
+    early skip of rewriting module: py._io.unicodedata [assertion]
+    early skip of rewriting module: unicodedata [assertion]
+    early skip of rewriting module: py._io.termios [assertion]
+    early skip of rewriting module: termios [assertion]
+    early skip of rewriting module: py._io.fcntl [assertion]
+    early skip of rewriting module: py._io.struct [assertion]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <_pytest.config.Config object at 0x7f609e0e4c50>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.mark' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/mark/__init__.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.main' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/main.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.runner' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/runner.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.fixtures' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/fixtures.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.helpconfig' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/helpconfig.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.python' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/python.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.terminal' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/terminal.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.debugging' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/debugging.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.unittest' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/unittest.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.capture' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/capture.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.skipping' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/skipping.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.tmpdir' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/tmpdir.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.monkeypatch' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/monkeypatch.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.recwarn' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/recwarn.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.pastebin' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/pastebin.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.nose' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/nose.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.assertion' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/assertion/__init__.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.junitxml' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/junitxml.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.resultlog' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/resultlog.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.doctest' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/doctest.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.freeze_support' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/freeze_support.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.setuponly' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/setuponly.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.setupplan' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/setupplan.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.warnings' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/warnings.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.logging' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/logging.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.reports' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/reports.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module 'testinfra.plugin' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/plugin.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <CaptureManager _method='fd' _global_capturing=<MultiCapture out=<FDCapture 1 oldfd=5 _state='suspended'> err=<FDCapture 2 oldfd=6 _state='suspended'> in_=<FDCapture 0 oldfd=3 _state='started'> _state='suspended' _in_suspended='<UNSET>'> _current_item=None>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <Session version1 exitstatus=0 testsfailed=0 testscollected=0>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <_pytest.terminal.TerminalReporter object at 0x7f609dfa5550>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <_pytest.logging.LoggingPlugin object at 0x7f609df54350>
+      finish pytest_plugin_registered --> [] [hook]
+    finish pytest_configure --> [] [hook]
+    pytest_sessionstart [hook]
+        session: <Session version1 exitstatus=0 testsfailed=0 testscollected=0>
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <_pytest.config.Config object at 0x7f609e0e4c50>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.mark' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/mark/__init__.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.main' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/main.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.runner' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/runner.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.fixtures' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/fixtures.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.helpconfig' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/helpconfig.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.python' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/python.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.terminal' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/terminal.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.debugging' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/debugging.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.unittest' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/unittest.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.capture' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/capture.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.skipping' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/skipping.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.tmpdir' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/tmpdir.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.monkeypatch' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/monkeypatch.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.recwarn' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/recwarn.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.pastebin' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/pastebin.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.nose' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/nose.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.assertion' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/assertion/__init__.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.junitxml' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/junitxml.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.resultlog' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/resultlog.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.doctest' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/doctest.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.freeze_support' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/freeze_support.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.setuponly' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/setuponly.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.setupplan' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/setupplan.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.warnings' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/warnings.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.logging' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/logging.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module '_pytest.reports' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/reports.pyc'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <module 'testinfra.plugin' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/plugin.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <CaptureManager _method='fd' _global_capturing=<MultiCapture out=<FDCapture 1 oldfd=5 _state='suspended'> err=<FDCapture 2 oldfd=6 _state='suspended'> in_=<FDCapture 0 oldfd=3 _state='started'> _state='suspended' _in_suspended='<UNSET>'> _current_item=None>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <Session version1 exitstatus=0 testsfailed=0 testscollected=0>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <_pytest.terminal.TerminalReporter object at 0x7f609dfa5550>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <_pytest.logging.LoggingPlugin object at 0x7f609df54350>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7f60a1b91190>
+          plugin: <_pytest.fixtures.FixtureManager object at 0x7f609df54850>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_report_header [hook]
+          startdir: /home/tul08567/Work/src/github.com/tulibraries/ansible-traefik/molecule/version1
+          config: <_pytest.config.Config object at 0x7f609e0e4c50>
+      finish pytest_report_header --> [['rootdir: /home/tul08567/Work/src/github.com/tulibraries/ansible-traefik/molecule/version1', 'plugins: testinfra-3.2.0'], ['using: pytest-4.6.6 pylib-1.8.0', 'setuptools registered plugins:', u'  testinfra-3.2.0 at /home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/plugin.py']] [hook]
+    finish pytest_sessionstart --> [] [hook]
+    pytest_collection [hook]
+        session: <Session version1 exitstatus=0 testsfailed=0 testscollected=0>
+    perform_collect <Session version1 exitstatus=0 testsfailed=0 testscollected=0> ['/home/tul08567/Work/src/github.com/tulibraries/ansible-traefik/molecule/version1/tests/test_version1.py'] [collection]
+        pytest_collectstart [hook]
+            collector: <Session version1 exitstatus=0 testsfailed=0 testscollected=0>
+        finish pytest_collectstart --> [] [hook]
+        pytest_make_collect_report [hook]
+            collector: <Session version1 exitstatus=0 testsfailed=0 testscollected=0>
+        processing argument /home/tul08567/Work/src/github.com/tulibraries/ansible-traefik/molecule/version1/tests/test_version1.py [collection]
+            pytest_collect_file [hook]
+                path: /home/tul08567/Work/src/github.com/tulibraries/ansible-traefik/molecule/version1/tests/test_version1.py
+                parent: <Session version1 exitstatus=0 testsfailed=0 testscollected=0>
+              pytest_pycollect_makemodule [hook]
+                  path: /home/tul08567/Work/src/github.com/tulibraries/ansible-traefik/molecule/version1/tests/test_version1.py
+                  parent: <Session version1 exitstatus=0 testsfailed=0 testscollected=0>
+              finish pytest_pycollect_makemodule --> <Module tests/test_version1.py> [hook]
+            finish pytest_collect_file --> [<Module tests/test_version1.py>] [hook]
+          matchnodes [<Module tests/test_version1.py>] [] [collection]
+            matchnodes finished ->  1 nodes [collection]
+        finish pytest_make_collect_report --> <CollectReport '' lenresult=1 outcome='passed'> [hook]
+        pytest_collectreport [hook]
+            report: <CollectReport '' lenresult=1 outcome='passed'>
+        finish pytest_collectreport --> [] [hook]
+    genitems <Module tests/test_version1.py> [collection]
+      pytest_collectstart [hook]
+          collector: <Module tests/test_version1.py>
+      finish pytest_collectstart --> [] [hook]
+      pytest_make_collect_report [hook]
+          collector: <Module tests/test_version1.py>
+      find_module called for: test_version1 [assertion]
+      matched test file (was specified on cmdline): '/home/tul08567/Work/src/github.com/tulibraries/ansible-traefik/molecule/version1/tests/test_version1.py' [assertion]
+      rewriting '/home/tul08567/Work/src/github.com/tulibraries/ansible-traefik/molecule/version1/tests/test_version1.py' [assertion]
+      early skip of rewriting module: encodings.ascii [assertion]
+      matched marked file 'testinfra.utils' (from 'testinfra') [assertion]
+      find_module called for: testinfra.utils [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/utils.py' [assertion]
+      matched marked file 'testinfra.utils.__future__' (from 'testinfra') [assertion]
+      find_module called for: testinfra.utils.__future__ [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/utils/__future__.py' [assertion]
+      matched marked file 'testinfra.utils.contextlib' (from 'testinfra') [assertion]
+      find_module called for: testinfra.utils.contextlib [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/utils/contextlib.py' [assertion]
+      matched marked file 'testinfra.utils.locale' (from 'testinfra') [assertion]
+      find_module called for: testinfra.utils.locale [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/utils/locale.py' [assertion]
+      matched marked file 'testinfra.utils.re' (from 'testinfra') [assertion]
+      find_module called for: testinfra.utils.re [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/utils/re.py' [assertion]
+      matched marked file 'testinfra.utils.shutil' (from 'testinfra') [assertion]
+      find_module called for: testinfra.utils.shutil [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/utils/shutil.py' [assertion]
+      matched marked file 'testinfra.utils.tempfile' (from 'testinfra') [assertion]
+      find_module called for: testinfra.utils.tempfile [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/utils/tempfile.py' [assertion]
+      matched marked file 'testinfra.utils.six' (from 'testinfra') [assertion]
+      find_module called for: testinfra.utils.six [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/utils/six.py' [assertion]
+      matched marked file 'testinfra.utils.socket' (from 'testinfra') [assertion]
+      find_module called for: testinfra.utils.socket [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/utils/socket.py' [assertion]
+      matched marked file 'testinfra.utils.ansible_runner' (from 'testinfra') [assertion]
+      find_module called for: testinfra.utils.ansible_runner [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/utils/ansible_runner.py' [assertion]
+      early skip of rewriting module: json [assertion]
+      early skip of rewriting module: json.decoder [assertion]
+      early skip of rewriting module: json.re [assertion]
+      early skip of rewriting module: json.sys [assertion]
+      early skip of rewriting module: json.struct [assertion]
+      early skip of rewriting module: json.json [assertion]
+      early skip of rewriting module: json.scanner [assertion]
+      early skip of rewriting module: json._json [assertion]
+      early skip of rewriting module: _json [assertion]
+      early skip of rewriting module: json.encoder [assertion]
+      early skip of rewriting module: ConfigParser [assertion]
+      matched marked file 'testinfra.backend.local' (from 'testinfra') [assertion]
+      find_module called for: testinfra.backend.local [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/backend/local.py' [assertion]
+      matched marked file 'testinfra.backend.__builtin__' (from 'testinfra') [assertion]
+      find_module called for: testinfra.backend.__builtin__ [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/backend/__builtin__.py' [assertion]
+      matched marked file 'testinfra.backend._pytest' (from 'testinfra') [assertion]
+      find_module called for: testinfra.backend._pytest [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/backend/_pytest.py' [assertion]
+      matched marked file 'testinfra.backend.testinfra' (from 'testinfra') [assertion]
+      find_module called for: testinfra.backend.testinfra [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/backend/testinfra.py' [assertion]
+      matched marked file 'testinfra.backend.base' (from 'testinfra') [assertion]
+      find_module called for: testinfra.backend.base [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/backend/base.py' [assertion]
+      matched marked file 'testinfra.backend.collections' (from 'testinfra') [assertion]
+      find_module called for: testinfra.backend.collections [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/backend/collections.py' [assertion]
+      matched marked file 'testinfra.backend.locale' (from 'testinfra') [assertion]
+      find_module called for: testinfra.backend.locale [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/backend/locale.py' [assertion]
+      matched marked file 'testinfra.backend.logging' (from 'testinfra') [assertion]
+      find_module called for: testinfra.backend.logging [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/backend/logging.py' [assertion]
+      matched marked file 'testinfra.backend.pipes' (from 'testinfra') [assertion]
+      find_module called for: testinfra.backend.pipes [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/backend/pipes.py' [assertion]
+      early skip of rewriting module: pipes [assertion]
+      matched marked file 'testinfra.backend.subprocess' (from 'testinfra') [assertion]
+      find_module called for: testinfra.backend.subprocess [assertion]
+      rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/backend/subprocess.py' [assertion]
+        pytest_pycollect_makeitem [hook]
+            obj: <module '_pytest.assertion.rewrite' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/_pytest/assertion/rewrite.pyc'>
+            collector: <Module tests/test_version1.py>
+            name: @pytest_ar
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: None
+            collector: <Module tests/test_version1.py>
+            name: __spec__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: {'bytearray': <type 'bytearray'>, 'IndexError': <type 'exceptions.IndexError'>, 'all': <built-in function all>, 'help': Type help() for interactive help, or help(object) for help about object., 'vars': <built-in function vars>, 'SyntaxError': <type 'exceptions.SyntaxError'>, 'unicode': <type 'unicode'>, 'UnicodeDecodeError': <type 'exceptions.UnicodeDecodeError'>, 'memoryview': <type 'memoryview'>, 'isinstance': <built-in function isinstance>, 'copyright': Copyright (c) 2001-2018 Python Software Foundation.
+All Rights Reserved.
+
+Copyright (c) 2000 BeOpen.com.
+All Rights Reserved.
+
+Copyright (c) 1995-2001 Corporation for National Research Initiatives.
+All Rights Reserved.
+
+Copyright (c) 1991-1995 Stichting Mathematisch Centrum, Amsterdam.
+All Rights Reserved., 'NameError': <type 'exceptions.NameError'>, 'BytesWarning': <type 'exceptions.BytesWarning'>, 'dict': <type 'dict'>, 'input': <built-in function input>, 'oct': <built-in function oct>, 'bin': <built-in function bin>, 'SystemExit': <type 'exceptions.SystemExit'>, 'StandardError': <type 'exceptions.StandardError'>, 'format': <built-in function format>, 'repr': <built-in function repr>, 'sorted': <built-in function sorted>, 'False': False, 'RuntimeWarning': <type 'exceptions.RuntimeWarning'>, 'list': <type 'list'>, 'iter': <built-in function iter>, 'reload': <built-in function reload>, 'Warning': <type 'exceptions.Warning'>, '__package__': None, 'round': <built-in function round>, 'dir': <built-in function dir>, 'cmp': <built-in function cmp>, 'set': <type 'set'>, 'bytes': <type 'str'>, 'reduce': <built-in function reduce>, 'intern': <built-in function intern>, 'issubclass': <built-in function issubclass>, 'Ellipsis': Ellipsis, 'EOFError': <type 'exceptions.EOFError'>, 'locals': <built-in function locals>, 'BufferError': <type 'exceptions.BufferError'>, 'slice': <type 'slice'>, 'FloatingPointError': <type 'exceptions.FloatingPointError'>, 'sum': <built-in function sum>, 'getattr': <built-in function getattr>, 'abs': <built-in function abs>, 'exit': Use exit() or Ctrl-D (i.e. EOF) to exit, 'print': <built-in function print>, 'True': True, 'FutureWarning': <type 'exceptions.FutureWarning'>, 'ImportWarning': <type 'exceptions.ImportWarning'>, 'None': None, 'hash': <built-in function hash>, 'ReferenceError': <type 'exceptions.ReferenceError'>, 'len': <built-in function len>, 'credits':     Thanks to CWI, CNRI, BeOpen.com, Zope Corporation and a cast of thousands
+    for supporting Python development.  See www.python.org for more information., 'frozenset': <type 'frozenset'>, '__name__': '__builtin__', 'ord': <built-in function ord>, 'super': <type 'super'>, 'TypeError': <type 'exceptions.TypeError'>, 'license': Type license() to see the full license text, 'KeyboardInterrupt': <type 'exceptions.KeyboardInterrupt'>, 'UserWarning': <type 'exceptions.UserWarning'>, 'filter': <built-in function filter>, 'range': <built-in function range>, 'staticmethod': <type 'staticmethod'>, 'SystemError': <type 'exceptions.SystemError'>, 'BaseException': <type 'exceptions.BaseException'>, 'pow': <built-in function pow>, 'RuntimeError': <type 'exceptions.RuntimeError'>, 'float': <type 'float'>, 'MemoryError': <type 'exceptions.MemoryError'>, 'StopIteration': <type 'exceptions.StopIteration'>, 'globals': <built-in function globals>, 'divmod': <built-in function divmod>, 'enumerate': <type 'enumerate'>, 'apply': <built-in function apply>, 'LookupError': <type 'exceptions.LookupError'>, 'open': <built-in function open>, 'quit': Use quit() or Ctrl-D (i.e. EOF) to exit, 'basestring': <type 'basestring'>, 'UnicodeError': <type 'exceptions.UnicodeError'>, 'zip': <built-in function zip>, 'hex': <built-in function hex>, 'long': <type 'long'>, 'next': <built-in function next>, 'ImportError': <type 'exceptions.ImportError'>, 'chr': <built-in function chr>, 'xrange': <type 'xrange'>, 'type': <type 'type'>, '__doc__': "Built-in functions, exceptions, and other objects.\n\nNoteworthy: None is the `nil' object; Ellipsis represents `...' in slices.", 'Exception': <type 'exceptions.Exception'>, 'tuple': <type 'tuple'>, 'UnicodeTranslateError': <type 'exceptions.UnicodeTranslateError'>, 'reversed': <type 'reversed'>, 'UnicodeEncodeError': <type 'exceptions.UnicodeEncodeError'>, 'IOError': <type 'exceptions.IOError'>, 'hasattr': <built-in function hasattr>, 'delattr': <built-in function delattr>, 'setattr': <built-in function setattr>, 'raw_input': <built-in function raw_input>, 'SyntaxWarning': <type 'exceptions.SyntaxWarning'>, 'compile': <built-in function compile>, 'ArithmeticError': <type 'exceptions.ArithmeticError'>, 'str': <type 'str'>, 'property': <type 'property'>, 'GeneratorExit': <type 'exceptions.GeneratorExit'>, 'int': <type 'int'>, '__import__': <built-in function __import__>, 'KeyError': <type 'exceptions.KeyError'>, 'coerce': <built-in function coerce>, 'PendingDeprecationWarning': <type 'exceptions.PendingDeprecationWarning'>, 'file': <type 'file'>, 'EnvironmentError': <type 'exceptions.EnvironmentError'>, 'unichr': <built-in function unichr>, 'id': <built-in function id>, 'OSError': <type 'exceptions.OSError'>, 'DeprecationWarning': <type 'exceptions.DeprecationWarning'>, 'min': <built-in function min>, 'UnicodeWarning': <type 'exceptions.UnicodeWarning'>, 'execfile': <built-in function execfile>, 'any': <built-in function any>, 'complex': <type 'complex'>, 'bool': <type 'bool'>, 'ValueError': <type 'exceptions.ValueError'>, 'NotImplemented': NotImplemented, 'map': <built-in function map>, 'buffer': <type 'buffer'>, 'max': <built-in function max>, 'object': <type 'object'>, 'TabError': <type 'exceptions.TabError'>, 'callable': <built-in function callable>, 'ZeroDivisionError': <type 'exceptions.ZeroDivisionError'>, 'eval': <built-in function eval>, '__debug__': True, 'IndentationError': <type 'exceptions.IndentationError'>, 'AssertionError': <type 'exceptions.AssertionError'>, 'classmethod': <type 'classmethod'>, 'UnboundLocalError': <type 'exceptions.UnboundLocalError'>, 'NotImplementedError': <type 'exceptions.NotImplementedError'>, 'AttributeError': <type 'exceptions.AttributeError'>, 'OverflowError': <type 'exceptions.OverflowError'>}
+            collector: <Module tests/test_version1.py>
+            name: __builtins__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <module 'os' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/lib/python2.7/os.py'>
+            collector: <Module tests/test_version1.py>
+            name: os
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: /home/tul08567/Work/src/github.com/tulibraries/ansible-traefik/molecule/version1/tests/test_version1.py
+            collector: <Module tests/test_version1.py>
+            name: __file__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <function test_hosts_file at 0x7f609dcdd8c0>
+            collector: <Module tests/test_version1.py>
+            name: test_hosts_file
+          pytest_generate_tests [hook]
+              metafunc: <_pytest.python.Metafunc object at 0x7f609dd018d0>
+          matched marked file 'testinfra.backend.ansible' (from 'testinfra') [assertion]
+          find_module called for: testinfra.backend.ansible [assertion]
+          rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/backend/ansible.py' [assertion]
+          early skip of rewriting module: encodings.unicode_escape [assertion]
+          finish pytest_generate_tests --> [] [hook]
+        finish pytest_pycollect_makeitem --> [<Function test_hosts_file[ansible://instance]>] [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <_pytest.assertion.rewrite.AssertionRewritingHook object at 0x7f609dff4190>
+            collector: <Module tests/test_version1.py>
+            name: __loader__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <function test_traefik_paths at 0x7f609dcdd9b0>
+            collector: <Module tests/test_version1.py>
+            name: test_traefik_paths
+          pytest_generate_tests [hook]
+              metafunc: <_pytest.python.Metafunc object at 0x7f609df65e10>
+            pytest_make_parametrize_id [hook]
+                argname: path
+                config: <_pytest.config.Config object at 0x7f609e0e4c50>
+                val: /etc/traefik.toml
+            finish pytest_make_parametrize_id --> None [hook]
+            pytest_make_parametrize_id [hook]
+                argname: path_type
+                config: <_pytest.config.Config object at 0x7f609e0e4c50>
+                val: file
+            finish pytest_make_parametrize_id --> None [hook]
+            pytest_make_parametrize_id [hook]
+                argname: user
+                config: <_pytest.config.Config object at 0x7f609e0e4c50>
+                val: root
+            finish pytest_make_parametrize_id --> None [hook]
+            pytest_make_parametrize_id [hook]
+                argname: group
+                config: <_pytest.config.Config object at 0x7f609e0e4c50>
+                val: root
+            finish pytest_make_parametrize_id --> None [hook]
+            pytest_make_parametrize_id [hook]
+                argname: mode
+                config: <_pytest.config.Config object at 0x7f609e0e4c50>
+                val: 484
+            finish pytest_make_parametrize_id --> None [hook]
+          finish pytest_generate_tests --> [] [hook]
+        finish pytest_pycollect_makeitem --> [<Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>] [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <module 'pytest' from '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/pytest.pyc'>
+            collector: <Module tests/test_version1.py>
+            name: pytest
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: [u'instance']
+            collector: <Module tests/test_version1.py>
+            name: TESTINFRA_HOSTS
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <function test_traefik_services at 0x7f609dcdd938>
+            collector: <Module tests/test_version1.py>
+            name: test_traefik_services
+          pytest_generate_tests [hook]
+              metafunc: <_pytest.python.Metafunc object at 0x7f609df65050>
+          finish pytest_generate_tests --> [] [hook]
+        finish pytest_pycollect_makeitem --> [<Function test_traefik_services[ansible://instance]>] [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: /home/tul08567/Work/src/github.com/tulibraries/ansible-traefik/molecule/version1/tests/__pycache__/test_version1.cpython-27-PYTEST.pyc
+            collector: <Module tests/test_version1.py>
+            name: __cached__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: test_version1
+            collector: <Module tests/test_version1.py>
+            name: __name__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <function test_traefik_processes at 0x7f609dcdd848>
+            collector: <Module tests/test_version1.py>
+            name: test_traefik_processes
+          pytest_generate_tests [hook]
+              metafunc: <_pytest.python.Metafunc object at 0x7f609dd05590>
+          finish pytest_generate_tests --> [] [hook]
+        finish pytest_pycollect_makeitem --> [<Function test_traefik_processes[ansible://instance]>] [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: None
+            collector: <Module tests/test_version1.py>
+            name: __package__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <module '__builtin__' (built-in)>
+            collector: <Module tests/test_version1.py>
+            name: @py_builtins
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: 
+Role tests default variables installation.
+
+            collector: <Module tests/test_version1.py>
+            name: __doc__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <class 'testinfra.utils.ansible_runner.AnsibleRunner'>
+            collector: <Module tests/test_version1.py>
+            name: AnsibleRunner
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <slot wrapper '__setattr__' of 'module' objects>
+            collector: <Module tests/test_version1.py>
+            name: __setattr__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <built-in method __new__ of type object at 0x55b9705a72a0>
+            collector: <Module tests/test_version1.py>
+            name: __new__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <slot wrapper '__getattribute__' of 'module' objects>
+            collector: <Module tests/test_version1.py>
+            name: __getattribute__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <slot wrapper '__delattr__' of 'module' objects>
+            collector: <Module tests/test_version1.py>
+            name: __delattr__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <slot wrapper '__repr__' of 'module' objects>
+            collector: <Module tests/test_version1.py>
+            name: __repr__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <member '__dict__' of 'module' objects>
+            collector: <Module tests/test_version1.py>
+            name: __dict__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <slot wrapper '__init__' of 'module' objects>
+            collector: <Module tests/test_version1.py>
+            name: __init__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <method '__reduce_ex__' of 'object' objects>
+            collector: <Module tests/test_version1.py>
+            name: __reduce_ex__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <method '__reduce__' of 'object' objects>
+            collector: <Module tests/test_version1.py>
+            name: __reduce__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <slot wrapper '__str__' of 'object' objects>
+            collector: <Module tests/test_version1.py>
+            name: __str__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <method '__format__' of 'object' objects>
+            collector: <Module tests/test_version1.py>
+            name: __format__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <attribute '__class__' of 'object' objects>
+            collector: <Module tests/test_version1.py>
+            name: __class__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <method '__subclasshook__' of 'object' objects>
+            collector: <Module tests/test_version1.py>
+            name: __subclasshook__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <slot wrapper '__hash__' of 'object' objects>
+            collector: <Module tests/test_version1.py>
+            name: __hash__
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            obj: <method '__sizeof__' of 'object' objects>
+            collector: <Module tests/test_version1.py>
+            name: __sizeof__
+        finish pytest_pycollect_makeitem --> None [hook]
+      finish pytest_make_collect_report --> <CollectReport 'tests/test_version1.py' lenresult=4 outcome='passed'> [hook]
+    genitems <Function test_hosts_file[ansible://instance]> [collection]
+      pytest_itemcollected [hook]
+          item: <Function test_hosts_file[ansible://instance]>
+      finish pytest_itemcollected --> [] [hook]
+    genitems <Function test_traefik_processes[ansible://instance]> [collection]
+      pytest_itemcollected [hook]
+          item: <Function test_traefik_processes[ansible://instance]>
+      finish pytest_itemcollected --> [] [hook]
+    genitems <Function test_traefik_services[ansible://instance]> [collection]
+      pytest_itemcollected [hook]
+          item: <Function test_traefik_services[ansible://instance]>
+      finish pytest_itemcollected --> [] [hook]
+    genitems <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]> [collection]
+      pytest_itemcollected [hook]
+          item: <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>
+      finish pytest_itemcollected --> [] [hook]
+      pytest_collectreport [hook]
+          report: <CollectReport 'tests/test_version1.py' lenresult=4 outcome='passed'>
+      finish pytest_collectreport --> [] [hook]
+      pytest_collection_modifyitems [hook]
+          items: [<Function test_hosts_file[ansible://instance]>, <Function test_traefik_processes[ansible://instance]>, <Function test_traefik_services[ansible://instance]>, <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>]
+          session: <Session version1 exitstatus=0 testsfailed=0 testscollected=0>
+          config: <_pytest.config.Config object at 0x7f609e0e4c50>
+      finish pytest_collection_modifyitems --> [] [hook]
+      pytest_collection_finish [hook]
+          session: <Session version1 exitstatus=0 testsfailed=0 testscollected=0>
+        pytest_report_collectionfinish [hook]
+            items: [<Function test_hosts_file[ansible://instance]>, <Function test_traefik_processes[ansible://instance]>, <Function test_traefik_services[ansible://instance]>, <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>]
+            config: <_pytest.config.Config object at 0x7f609e0e4c50>
+            startdir: /home/tul08567/Work/src/github.com/tulibraries/ansible-traefik/molecule/version1
+        finish pytest_report_collectionfinish --> [] [hook]
+      finish pytest_collection_finish --> [] [hook]
+    finish pytest_collection --> [<Function test_hosts_file[ansible://instance]>, <Function test_traefik_processes[ansible://instance]>, <Function test_traefik_services[ansible://instance]>, <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>] [hook]
+    pytest_runtestloop [hook]
+        session: <Session version1 exitstatus=0 testsfailed=0 testscollected=4>
+      pytest_runtest_protocol [hook]
+          item: <Function test_hosts_file[ansible://instance]>
+          nextitem: <Function test_traefik_processes[ansible://instance]>
+        pytest_runtest_logstart [hook]
+            location: ('tests/test_version1.py', 12, 'test_hosts_file[ansible://instance]')
+            nodeid: tests/test_version1.py::test_hosts_file[ansible://instance]
+        finish pytest_runtest_logstart --> [] [hook]
+        pytest_runtest_setup [hook]
+            item: <Function test_hosts_file[ansible://instance]>
+          pytest_fixture_setup [hook]
+              fixturedef: <FixtureDef argname='_testinfra_host' scope=u'module' baseid=''>
+              request: <SubRequest '_testinfra_host' for <Function test_hosts_file[ansible://instance]>>
+          finish pytest_fixture_setup --> <testinfra.host.Host object at 0x7f609dd01710> [hook]
+          pytest_fixture_setup [hook]
+              fixturedef: <FixtureDef argname='host' scope=u'module' baseid=''>
+              request: <SubRequest 'host' for <Function test_hosts_file[ansible://instance]>>
+          finish pytest_fixture_setup --> <testinfra.host.Host object at 0x7f609dd01710> [hook]
+        finish pytest_runtest_setup --> [] [hook]
+        pytest_runtest_makereport [hook]
+            item: <Function test_hosts_file[ansible://instance]>
+            call: <CallInfo when='setup' result: []>
+        finish pytest_runtest_makereport --> <TestReport 'tests/test_version1.py::test_hosts_file[ansible://instance]' when='setup' outcome='passed'> [hook]
+        pytest_runtest_logreport [hook]
+            report: <TestReport 'tests/test_version1.py::test_hosts_file[ansible://instance]' when='setup' outcome='passed'>
+          pytest_report_teststatus [hook]
+              report: <TestReport 'tests/test_version1.py::test_hosts_file[ansible://instance]' when='setup' outcome='passed'>
+              config: <_pytest.config.Config object at 0x7f609e0e4c50>
+          finish pytest_report_teststatus --> ('', '', '') [hook]
+        finish pytest_runtest_logreport --> [] [hook]
+        pytest_runtest_call [hook]
+            item: <Function test_hosts_file[ansible://instance]>
+          pytest_pyfunc_call [hook]
+              pyfuncitem: <Function test_hosts_file[ansible://instance]>
+          matched marked file 'testinfra.modules.file' (from 'testinfra') [assertion]
+          find_module called for: testinfra.modules.file [assertion]
+          rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/modules/file.py' [assertion]
+          early skip of rewriting module: encodings.utf_32_be [assertion]
+          matched marked file 'testinfra.modules.__builtin__' (from 'testinfra') [assertion]
+          find_module called for: testinfra.modules.__builtin__ [assertion]
+          rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/modules/__builtin__.py' [assertion]
+          matched marked file 'testinfra.modules._pytest' (from 'testinfra') [assertion]
+          find_module called for: testinfra.modules._pytest [assertion]
+          rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/modules/_pytest.py' [assertion]
+          matched marked file 'testinfra.modules.datetime' (from 'testinfra') [assertion]
+          find_module called for: testinfra.modules.datetime [assertion]
+          rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/modules/datetime.py' [assertion]
+          matched marked file 'testinfra.modules.six' (from 'testinfra') [assertion]
+          find_module called for: testinfra.modules.six [assertion]
+          rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/modules/six.py' [assertion]
+          matched marked file 'testinfra.modules.testinfra' (from 'testinfra') [assertion]
+          find_module called for: testinfra.modules.testinfra [assertion]
+          rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/modules/testinfra.py' [assertion]
+          matched marked file 'testinfra.modules.base' (from 'testinfra') [assertion]
+          find_module called for: testinfra.modules.base [assertion]
+          rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/modules/base.py' [assertion]
+          matched marked file 'testinfra.modules.systeminfo' (from 'testinfra') [assertion]
+          find_module called for: testinfra.modules.systeminfo [assertion]
+          rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/modules/systeminfo.py' [assertion]
+          matched marked file 'testinfra.modules.re' (from 'testinfra') [assertion]
+          find_module called for: testinfra.modules.re [assertion]
+          rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/modules/re.py' [assertion]
+          matched marked file 'testinfra.backend.docker' (from 'testinfra') [assertion]
+          find_module called for: testinfra.backend.docker [assertion]
+          rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/backend/docker.py' [assertion]
+          finish pytest_pyfunc_call --> True [hook]
+        finish pytest_runtest_call --> [] [hook]
+        pytest_runtest_makereport [hook]
+            item: <Function test_hosts_file[ansible://instance]>
+            call: <CallInfo when='call' result: []>
+        finish pytest_runtest_makereport --> <TestReport 'tests/test_version1.py::test_hosts_file[ansible://instance]' when='call' outcome='passed'> [hook]
+        pytest_runtest_logreport [hook]
+            report: <TestReport 'tests/test_version1.py::test_hosts_file[ansible://instance]' when='call' outcome='passed'>
+          pytest_report_teststatus [hook]
+              report: <TestReport 'tests/test_version1.py::test_hosts_file[ansible://instance]' when='call' outcome='passed'>
+              config: <_pytest.config.Config object at 0x7f609e0e4c50>
+          finish pytest_report_teststatus --> ('passed', '.', 'PASSED') [hook]
+        finish pytest_runtest_logreport --> [] [hook]
+        pytest_runtest_teardown [hook]
+            item: <Function test_hosts_file[ansible://instance]>
+            nextitem: <Function test_traefik_processes[ansible://instance]>
+        finish pytest_runtest_teardown --> [] [hook]
+        pytest_runtest_makereport [hook]
+            item: <Function test_hosts_file[ansible://instance]>
+            call: <CallInfo when='teardown' result: []>
+        finish pytest_runtest_makereport --> <TestReport 'tests/test_version1.py::test_hosts_file[ansible://instance]' when='teardown' outcome='passed'> [hook]
+        pytest_runtest_logreport [hook]
+            report: <TestReport 'tests/test_version1.py::test_hosts_file[ansible://instance]' when='teardown' outcome='passed'>
+          pytest_report_teststatus [hook]
+              report: <TestReport 'tests/test_version1.py::test_hosts_file[ansible://instance]' when='teardown' outcome='passed'>
+              config: <_pytest.config.Config object at 0x7f609e0e4c50>
+          finish pytest_report_teststatus --> ('', '', '') [hook]
+        finish pytest_runtest_logreport --> [] [hook]
+        pytest_runtest_logfinish [hook]
+            location: ('tests/test_version1.py', 12, 'test_hosts_file[ansible://instance]')
+            nodeid: tests/test_version1.py::test_hosts_file[ansible://instance]
+        finish pytest_runtest_logfinish --> [] [hook]
+      finish pytest_runtest_protocol --> True [hook]
+      pytest_runtest_protocol [hook]
+          item: <Function test_traefik_processes[ansible://instance]>
+          nextitem: <Function test_traefik_services[ansible://instance]>
+        pytest_runtest_logstart [hook]
+            location: ('tests/test_version1.py', 22, 'test_traefik_processes[ansible://instance]')
+            nodeid: tests/test_version1.py::test_traefik_processes[ansible://instance]
+        finish pytest_runtest_logstart --> [] [hook]
+        pytest_runtest_setup [hook]
+            item: <Function test_traefik_processes[ansible://instance]>
+        finish pytest_runtest_setup --> [] [hook]
+        pytest_runtest_makereport [hook]
+            item: <Function test_traefik_processes[ansible://instance]>
+            call: <CallInfo when='setup' result: []>
+        finish pytest_runtest_makereport --> <TestReport 'tests/test_version1.py::test_traefik_processes[ansible://instance]' when='setup' outcome='passed'> [hook]
+        pytest_runtest_logreport [hook]
+            report: <TestReport 'tests/test_version1.py::test_traefik_processes[ansible://instance]' when='setup' outcome='passed'>
+          pytest_report_teststatus [hook]
+              report: <TestReport 'tests/test_version1.py::test_traefik_processes[ansible://instance]' when='setup' outcome='passed'>
+              config: <_pytest.config.Config object at 0x7f609e0e4c50>
+          finish pytest_report_teststatus --> ('', '', '') [hook]
+        finish pytest_runtest_logreport --> [] [hook]
+        pytest_runtest_call [hook]
+            item: <Function test_traefik_processes[ansible://instance]>
+          pytest_pyfunc_call [hook]
+              pyfuncitem: <Function test_traefik_processes[ansible://instance]>
+          matched marked file 'testinfra.modules.process' (from 'testinfra') [assertion]
+          find_module called for: testinfra.modules.process [assertion]
+          rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/modules/process.py' [assertion]
+          finish pytest_pyfunc_call --> True [hook]
+        finish pytest_runtest_call --> [] [hook]
+        pytest_runtest_makereport [hook]
+            item: <Function test_traefik_processes[ansible://instance]>
+            call: <CallInfo when='call' result: []>
+        finish pytest_runtest_makereport --> <TestReport 'tests/test_version1.py::test_traefik_processes[ansible://instance]' when='call' outcome='passed'> [hook]
+        pytest_runtest_logreport [hook]
+            report: <TestReport 'tests/test_version1.py::test_traefik_processes[ansible://instance]' when='call' outcome='passed'>
+          pytest_report_teststatus [hook]
+              report: <TestReport 'tests/test_version1.py::test_traefik_processes[ansible://instance]' when='call' outcome='passed'>
+              config: <_pytest.config.Config object at 0x7f609e0e4c50>
+          finish pytest_report_teststatus --> ('passed', '.', 'PASSED') [hook]
+        finish pytest_runtest_logreport --> [] [hook]
+        pytest_runtest_teardown [hook]
+            item: <Function test_traefik_processes[ansible://instance]>
+            nextitem: <Function test_traefik_services[ansible://instance]>
+        finish pytest_runtest_teardown --> [] [hook]
+        pytest_runtest_makereport [hook]
+            item: <Function test_traefik_processes[ansible://instance]>
+            call: <CallInfo when='teardown' result: []>
+        finish pytest_runtest_makereport --> <TestReport 'tests/test_version1.py::test_traefik_processes[ansible://instance]' when='teardown' outcome='passed'> [hook]
+        pytest_runtest_logreport [hook]
+            report: <TestReport 'tests/test_version1.py::test_traefik_processes[ansible://instance]' when='teardown' outcome='passed'>
+          pytest_report_teststatus [hook]
+              report: <TestReport 'tests/test_version1.py::test_traefik_processes[ansible://instance]' when='teardown' outcome='passed'>
+              config: <_pytest.config.Config object at 0x7f609e0e4c50>
+          finish pytest_report_teststatus --> ('', '', '') [hook]
+        finish pytest_runtest_logreport --> [] [hook]
+        pytest_runtest_logfinish [hook]
+            location: ('tests/test_version1.py', 22, 'test_traefik_processes[ansible://instance]')
+            nodeid: tests/test_version1.py::test_traefik_processes[ansible://instance]
+        finish pytest_runtest_logfinish --> [] [hook]
+      finish pytest_runtest_protocol --> True [hook]
+      pytest_runtest_protocol [hook]
+          item: <Function test_traefik_services[ansible://instance]>
+          nextitem: <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>
+        pytest_runtest_logstart [hook]
+            location: ('tests/test_version1.py', 30, 'test_traefik_services[ansible://instance]')
+            nodeid: tests/test_version1.py::test_traefik_services[ansible://instance]
+        finish pytest_runtest_logstart --> [] [hook]
+        pytest_runtest_setup [hook]
+            item: <Function test_traefik_services[ansible://instance]>
+        finish pytest_runtest_setup --> [] [hook]
+        pytest_runtest_makereport [hook]
+            item: <Function test_traefik_services[ansible://instance]>
+            call: <CallInfo when='setup' result: []>
+        finish pytest_runtest_makereport --> <TestReport 'tests/test_version1.py::test_traefik_services[ansible://instance]' when='setup' outcome='passed'> [hook]
+        pytest_runtest_logreport [hook]
+            report: <TestReport 'tests/test_version1.py::test_traefik_services[ansible://instance]' when='setup' outcome='passed'>
+          pytest_report_teststatus [hook]
+              report: <TestReport 'tests/test_version1.py::test_traefik_services[ansible://instance]' when='setup' outcome='passed'>
+              config: <_pytest.config.Config object at 0x7f609e0e4c50>
+          finish pytest_report_teststatus --> ('', '', '') [hook]
+        finish pytest_runtest_logreport --> [] [hook]
+        pytest_runtest_call [hook]
+            item: <Function test_traefik_services[ansible://instance]>
+          pytest_pyfunc_call [hook]
+              pyfuncitem: <Function test_traefik_services[ansible://instance]>
+          matched marked file 'testinfra.modules.service' (from 'testinfra') [assertion]
+          find_module called for: testinfra.modules.service [assertion]
+          rewriting '/home/tul08567/.local/share/virtualenvs/ansible-traefik-1DHLhrCD/local/lib/python2.7/site-packages/testinfra/modules/service.py' [assertion]
+          finish pytest_pyfunc_call --> True [hook]
+        finish pytest_runtest_call --> [] [hook]
+        pytest_runtest_makereport [hook]
+            item: <Function test_traefik_services[ansible://instance]>
+            call: <CallInfo when='call' result: []>
+        finish pytest_runtest_makereport --> <TestReport 'tests/test_version1.py::test_traefik_services[ansible://instance]' when='call' outcome='passed'> [hook]
+        pytest_runtest_logreport [hook]
+            report: <TestReport 'tests/test_version1.py::test_traefik_services[ansible://instance]' when='call' outcome='passed'>
+          pytest_report_teststatus [hook]
+              report: <TestReport 'tests/test_version1.py::test_traefik_services[ansible://instance]' when='call' outcome='passed'>
+              config: <_pytest.config.Config object at 0x7f609e0e4c50>
+          finish pytest_report_teststatus --> ('passed', '.', 'PASSED') [hook]
+        finish pytest_runtest_logreport --> [] [hook]
+        pytest_runtest_teardown [hook]
+            item: <Function test_traefik_services[ansible://instance]>
+            nextitem: <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>
+        finish pytest_runtest_teardown --> [] [hook]
+        pytest_runtest_makereport [hook]
+            item: <Function test_traefik_services[ansible://instance]>
+            call: <CallInfo when='teardown' result: []>
+        finish pytest_runtest_makereport --> <TestReport 'tests/test_version1.py::test_traefik_services[ansible://instance]' when='teardown' outcome='passed'> [hook]
+        pytest_runtest_logreport [hook]
+            report: <TestReport 'tests/test_version1.py::test_traefik_services[ansible://instance]' when='teardown' outcome='passed'>
+          pytest_report_teststatus [hook]
+              report: <TestReport 'tests/test_version1.py::test_traefik_services[ansible://instance]' when='teardown' outcome='passed'>
+              config: <_pytest.config.Config object at 0x7f609e0e4c50>
+          finish pytest_report_teststatus --> ('', '', '') [hook]
+        finish pytest_runtest_logreport --> [] [hook]
+        pytest_runtest_logfinish [hook]
+            location: ('tests/test_version1.py', 30, 'test_traefik_services[ansible://instance]')
+            nodeid: tests/test_version1.py::test_traefik_services[ansible://instance]
+        finish pytest_runtest_logfinish --> [] [hook]
+      finish pytest_runtest_protocol --> True [hook]
+      pytest_runtest_protocol [hook]
+          item: <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>
+          nextitem: None
+        pytest_runtest_logstart [hook]
+            location: ('tests/test_version1.py', 44, 'test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]')
+            nodeid: tests/test_version1.py::test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]
+        finish pytest_runtest_logstart --> [] [hook]
+        pytest_runtest_setup [hook]
+            item: <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>
+          pytest_fixture_setup [hook]
+              fixturedef: <FixtureDef argname='path' scope='function' baseid=''>
+              request: <SubRequest 'path' for <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>>
+          finish pytest_fixture_setup --> /etc/traefik.toml [hook]
+          pytest_fixture_setup [hook]
+              fixturedef: <FixtureDef argname='path_type' scope='function' baseid=''>
+              request: <SubRequest 'path_type' for <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>>
+          finish pytest_fixture_setup --> file [hook]
+          pytest_fixture_setup [hook]
+              fixturedef: <FixtureDef argname='user' scope='function' baseid=''>
+              request: <SubRequest 'user' for <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>>
+          finish pytest_fixture_setup --> root [hook]
+          pytest_fixture_setup [hook]
+              fixturedef: <FixtureDef argname='group' scope='function' baseid=''>
+              request: <SubRequest 'group' for <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>>
+          finish pytest_fixture_setup --> root [hook]
+          pytest_fixture_setup [hook]
+              fixturedef: <FixtureDef argname='mode' scope='function' baseid=''>
+              request: <SubRequest 'mode' for <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>>
+          finish pytest_fixture_setup --> 484 [hook]
+        finish pytest_runtest_setup --> [] [hook]
+        pytest_runtest_makereport [hook]
+            item: <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>
+            call: <CallInfo when='setup' result: []>
+        finish pytest_runtest_makereport --> <TestReport 'tests/test_version1.py::test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]' when='setup' outcome='passed'> [hook]
+        pytest_runtest_logreport [hook]
+            report: <TestReport 'tests/test_version1.py::test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]' when='setup' outcome='passed'>
+          pytest_report_teststatus [hook]
+              report: <TestReport 'tests/test_version1.py::test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]' when='setup' outcome='passed'>
+              config: <_pytest.config.Config object at 0x7f609e0e4c50>
+          finish pytest_report_teststatus --> ('', '', '') [hook]
+        finish pytest_runtest_logreport --> [] [hook]
+        pytest_runtest_call [hook]
+            item: <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>
+          pytest_pyfunc_call [hook]
+              pyfuncitem: <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>
+          finish pytest_pyfunc_call --> True [hook]
+        finish pytest_runtest_call --> [] [hook]
+        pytest_runtest_makereport [hook]
+            item: <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>
+            call: <CallInfo when='call' result: []>
+        finish pytest_runtest_makereport --> <TestReport 'tests/test_version1.py::test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]' when='call' outcome='passed'> [hook]
+        pytest_runtest_logreport [hook]
+            report: <TestReport 'tests/test_version1.py::test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]' when='call' outcome='passed'>
+          pytest_report_teststatus [hook]
+              report: <TestReport 'tests/test_version1.py::test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]' when='call' outcome='passed'>
+              config: <_pytest.config.Config object at 0x7f609e0e4c50>
+          finish pytest_report_teststatus --> ('passed', '.', 'PASSED') [hook]
+        finish pytest_runtest_logreport --> [] [hook]
+        pytest_runtest_teardown [hook]
+            item: <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>
+            nextitem: None
+          pytest_fixture_post_finalizer [hook]
+              fixturedef: <FixtureDef argname='mode' scope='function' baseid=''>
+              request: <SubRequest 'mode' for <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>>
+          finish pytest_fixture_post_finalizer --> [] [hook]
+          pytest_fixture_post_finalizer [hook]
+              fixturedef: <FixtureDef argname='group' scope='function' baseid=''>
+              request: <SubRequest 'group' for <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>>
+          finish pytest_fixture_post_finalizer --> [] [hook]
+          pytest_fixture_post_finalizer [hook]
+              fixturedef: <FixtureDef argname='user' scope='function' baseid=''>
+              request: <SubRequest 'user' for <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>>
+          finish pytest_fixture_post_finalizer --> [] [hook]
+          pytest_fixture_post_finalizer [hook]
+              fixturedef: <FixtureDef argname='path_type' scope='function' baseid=''>
+              request: <SubRequest 'path_type' for <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>>
+          finish pytest_fixture_post_finalizer --> [] [hook]
+          pytest_fixture_post_finalizer [hook]
+              fixturedef: <FixtureDef argname='path' scope='function' baseid=''>
+              request: <SubRequest 'path' for <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>>
+          finish pytest_fixture_post_finalizer --> [] [hook]
+          pytest_fixture_post_finalizer [hook]
+              fixturedef: <FixtureDef argname='host' scope=u'module' baseid=''>
+              request: <SubRequest 'host' for <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>>
+          finish pytest_fixture_post_finalizer --> [] [hook]
+          pytest_fixture_post_finalizer [hook]
+              fixturedef: <FixtureDef argname='host' scope=u'module' baseid=''>
+              request: <SubRequest 'host' for <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>>
+          finish pytest_fixture_post_finalizer --> [] [hook]
+          pytest_fixture_post_finalizer [hook]
+              fixturedef: <FixtureDef argname='host' scope=u'module' baseid=''>
+              request: <SubRequest 'host' for <Function test_traefik_services[ansible://instance]>>
+          finish pytest_fixture_post_finalizer --> [] [hook]
+          pytest_fixture_post_finalizer [hook]
+              fixturedef: <FixtureDef argname='host' scope=u'module' baseid=''>
+              request: <SubRequest 'host' for <Function test_traefik_processes[ansible://instance]>>
+          finish pytest_fixture_post_finalizer --> [] [hook]
+          pytest_fixture_post_finalizer [hook]
+              fixturedef: <FixtureDef argname='host' scope=u'module' baseid=''>
+              request: <SubRequest 'host' for <Function test_hosts_file[ansible://instance]>>
+          finish pytest_fixture_post_finalizer --> [] [hook]
+          pytest_fixture_post_finalizer [hook]
+              fixturedef: <FixtureDef argname='_testinfra_host' scope=u'module' baseid=''>
+              request: <SubRequest '_testinfra_host' for <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>>
+          finish pytest_fixture_post_finalizer --> [] [hook]
+          pytest_fixture_post_finalizer [hook]
+              fixturedef: <FixtureDef argname='host' scope=u'module' baseid=''>
+              request: <SubRequest 'host' for <Function test_traefik_services[ansible://instance]>>
+          finish pytest_fixture_post_finalizer --> [] [hook]
+          pytest_fixture_post_finalizer [hook]
+              fixturedef: <FixtureDef argname='_testinfra_host' scope=u'module' baseid=''>
+              request: <SubRequest '_testinfra_host' for <Function test_traefik_services[ansible://instance]>>
+          finish pytest_fixture_post_finalizer --> [] [hook]
+          pytest_fixture_post_finalizer [hook]
+              fixturedef: <FixtureDef argname='host' scope=u'module' baseid=''>
+              request: <SubRequest 'host' for <Function test_traefik_processes[ansible://instance]>>
+          finish pytest_fixture_post_finalizer --> [] [hook]
+          pytest_fixture_post_finalizer [hook]
+              fixturedef: <FixtureDef argname='_testinfra_host' scope=u'module' baseid=''>
+              request: <SubRequest '_testinfra_host' for <Function test_traefik_processes[ansible://instance]>>
+          finish pytest_fixture_post_finalizer --> [] [hook]
+          pytest_fixture_post_finalizer [hook]
+              fixturedef: <FixtureDef argname='host' scope=u'module' baseid=''>
+              request: <SubRequest 'host' for <Function test_hosts_file[ansible://instance]>>
+          finish pytest_fixture_post_finalizer --> [] [hook]
+          pytest_fixture_post_finalizer [hook]
+              fixturedef: <FixtureDef argname='_testinfra_host' scope=u'module' baseid=''>
+              request: <SubRequest '_testinfra_host' for <Function test_hosts_file[ansible://instance]>>
+          finish pytest_fixture_post_finalizer --> [] [hook]
+        finish pytest_runtest_teardown --> [] [hook]
+        pytest_runtest_makereport [hook]
+            item: <Function test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]>
+            call: <CallInfo when='teardown' result: []>
+        finish pytest_runtest_makereport --> <TestReport 'tests/test_version1.py::test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]' when='teardown' outcome='passed'> [hook]
+        pytest_runtest_logreport [hook]
+            report: <TestReport 'tests/test_version1.py::test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]' when='teardown' outcome='passed'>
+          pytest_report_teststatus [hook]
+              report: <TestReport 'tests/test_version1.py::test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]' when='teardown' outcome='passed'>
+              config: <_pytest.config.Config object at 0x7f609e0e4c50>
+          finish pytest_report_teststatus --> ('', '', '') [hook]
+        finish pytest_runtest_logreport --> [] [hook]
+        pytest_runtest_logfinish [hook]
+            location: ('tests/test_version1.py', 44, 'test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]')
+            nodeid: tests/test_version1.py::test_traefik_paths[ansible://instance-/etc/traefik.toml-file-root-root-484]
+        finish pytest_runtest_logfinish --> [] [hook]
+      finish pytest_runtest_protocol --> True [hook]
+    finish pytest_runtestloop --> True [hook]
+    pytest_sessionfinish [hook]
+        session: <Session version1 exitstatus=0 testsfailed=0 testscollected=4>
+        exitstatus: 0
+      pytest_terminal_summary [hook]
+          config: <_pytest.config.Config object at 0x7f609e0e4c50>
+          exitstatus: 0
+          terminalreporter: <_pytest.terminal.TerminalReporter object at 0x7f609dfa5550>
+      finish pytest_terminal_summary --> [] [hook]
+    finish pytest_sessionfinish --> [] [hook]
+    pytest_unconfigure [hook]
+        config: <_pytest.config.Config object at 0x7f609e0e4c50>
+    finish pytest_unconfigure --> [] [hook]
