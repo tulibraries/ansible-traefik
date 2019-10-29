@@ -1,0 +1,24 @@
+version: 2
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test
+
+jobs:
+  test:
+    docker:
+      - image: circleci/python:3.6.6
+    working_directory: ~/ansible-traefik
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: install dependencies
+          command: |
+            pip install pipenv
+            pipenv install --dev
+      - run:
+          name: run tests
+          command: pipenv run molecule test --all

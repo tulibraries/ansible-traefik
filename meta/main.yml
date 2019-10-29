@@ -15,7 +15,7 @@ galaxy_info:
         - jessie
     - name: EL
       versions:
-      - 7
+        - 7
   galaxy_tags:
     - docker
     - reverseproxy

@@ -1,0 +1,23 @@
+global:
+  checkNewVersion: true
+log:
+  level: INFO
+  format: json
+  filePath: "/etc/traefik/logs/traefik.log"
+accessLog:
+  format: json
+  filePath: "/etc/traefik/logs/access.log"
+
+entryPoints:
+  web:
+    address: ":80"
+
+api:
+  dashboard: true
+  insecure: true
+
+providers:
+  providersThrottleDuration: 2s
+  file:
+    watch: true
+    filename: "/etc/traefik-dynamic.yml"

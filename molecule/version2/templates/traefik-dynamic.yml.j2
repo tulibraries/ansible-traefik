@@ -1,0 +1,15 @@
+http:
+  middlewares:
+    auth:
+      basicAuth:
+        users:
+          - "test:$apr1$uhOgm5GY$WYHL1kpXqfe6igCEkVutf."
+
+  routers:
+    traefik:
+      rule: "PATH(`/traefik`)"
+      service: api@internal
+      middlewares:
+        - auth
+
+  services: {}
