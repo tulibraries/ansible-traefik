@@ -1,8 +1,12 @@
 ---
 # handlers file for kibatic.traefik
+- name: Reload traefik unit
+  systemd:
+    daemon_reload: yes
+
 - name: Restart traefik
   systemd:
     name: traefik
     state: restarted
     enabled: true
-    daemon_reload: true
+  when: traefik_manage_service

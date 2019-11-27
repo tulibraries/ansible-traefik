@@ -16,11 +16,16 @@ Role Variables
 ```yml
 traefik_install_dir: /usr/bin
 traefik_binary_url: https://github.com/containous/traefik/releases/download/v1.7.5/traefik_linux-amd64
+traefik_tmp_path: "/tmp"
 traefik_bin_path: "{{ traefik_install_dir }}/traefik"
 traefik_config_file: /etc/traefik.toml
 traefik_template: traefik.toml
 traefik_systemd_unit_template: traefik.service
 traefik_systemd_unit_dest: /etc/systemd/system/traefik.service
+traefik_update: false
+traefik_manage_service: true
+traefik_service_enabled: true
+traefik_service_state: started
 ```
 
 

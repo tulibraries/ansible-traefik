@@ -15,3 +15,6 @@ traefik_config_file: /etc/traefik.toml
 traefik_systemd_unit_template: traefik.service
 traefik_systemd_unit_dest: /etc/systemd/system/traefik.service
 traefik_update: false
+traefik_manage_service: true
+traefik_service_enabled: true
+traefik_service_state: started
