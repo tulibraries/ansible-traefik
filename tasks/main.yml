@@ -56,9 +56,17 @@
     force: "{{ traefik_update }}"
   when: not traefik_binary_url.endswith(".tar.gz")
 
+
+- name: Ensure tmp directory
+  file:
+    path: "{{ traefik_tmp_path }}"
+    state: directory
+  when: traefik_binary_url.endswith(".tar.gz")
+
 - name: Download & Expand Tarred Traefik binary
   unarchive:
     src: "{{ traefik_binary_url }}"
+    creates: "{{ traefik_tmp_path }}/traefik"
     remote_src: true
     dest: "{{ traefik_tmp_path }}"
     force: "{{ traefik_update }}"
