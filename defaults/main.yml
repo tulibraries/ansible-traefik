@@ -14,6 +14,12 @@ traefik_config_file: /etc/traefik.toml
 #     dest: /etc/traefik-dynamic.toml
 traefik_systemd_unit_template: traefik.service
 traefik_systemd_unit_dest: /etc/systemd/system/traefik.service
+# restrict traefik permissions to minimum
+traefik_systemd_lockdown: false
+# additional paths that are accessed by traeifk read-only, e.g. /etc/ssl/traefik.pem, /etc/ssl/traefik.crt
+traefik_systemd_ro_paths: []
+# additional paths that are accessed by traeifk read-write, e.g. /etc/traefik-acme.json, /var/log/traefik/access.log
+traefik_systemd_rw_paths: []
 traefik_update: false
 traefik_manage_service: true
 traefik_service_enabled: true
