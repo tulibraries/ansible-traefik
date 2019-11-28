@@ -35,8 +35,7 @@
     owner: root
     group: root
     mode: 0644
-  notify:
-    - Restart traefik
+  notify: "{{ traefik_dynamic_config_restart | ternary(['Restart traefik'], []) }}"
   with_items: "{{ traefik_dynamic_configs | list }}"
   when: traefik_dynamic_configs is defined
 
