@@ -26,6 +26,9 @@ traefik_update: false
 traefik_manage_service: true
 traefik_service_enabled: true
 traefik_service_state: started
+traefik_log_rotation: true
+traefik_log_dir: /var/log/traefik
+traefik_logrotate_postrotate_cmd: 'systemctl kill --signal="USR1" traefik'
 ```
 
 
