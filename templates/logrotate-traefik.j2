@@ -1,0 +1,9 @@
+{{ traefik_log_dir }}/*.log {
+  size {{ traefik_logrotate_size }}
+  rotate {{ traefik_logrotate_number }}
+  missingok
+  notifempty
+  postrotate
+    {{ traefik_logrotate_postrotate_cmd }}
+  endscript
+}

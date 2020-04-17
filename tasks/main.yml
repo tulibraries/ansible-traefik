@@ -84,6 +84,12 @@
     force: "{{ traefik_update }}"
   when: traefik_binary_url.endswith(".tar.gz")
 
+- name: Setup log rotation if needed
+  template:
+    src: logrotate-traefik.j2
+    dest: "{{ traefik_logrotate_config_path }}"
+  when: traefik_log_rotation
+
 - name: Ensure traefik service is enabled and running
   systemd:
     name: traefik
