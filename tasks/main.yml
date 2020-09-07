@@ -40,12 +40,21 @@
   with_items: "{{ traefik_dynamic_configs | list }}"
   when: traefik_dynamic_configs is defined
 
-- name: Ensure traefik service is stopped before traefik update
-  service:
-    name: traefik
-    state: stopped
-    enabled: true
-  when: traefik_update
+- block:
+    - name: Ensure traefik service is stopped before traefik update
+      service:
+        name: traefik
+        state: stopped
+        enabled: true
+
+    - name: Remove existing binary
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - "{{ traefik_tmp_path }}/traefik"
+        - "{{ traefik_bin_path }}"
+  when: traefik_update | bool
 
 - name: Download Untarred Traefik binary
   get_url:
@@ -54,7 +63,6 @@
     owner: root
     group: root
     mode: 0755
-    force: "{{ traefik_update }}"
   when: not traefik_binary_url.endswith(".tar.gz")
 
 
@@ -70,7 +78,6 @@
     creates: "{{ traefik_tmp_path }}/traefik"
     remote_src: true
     dest: "{{ traefik_tmp_path }}"
-    force: "{{ traefik_update }}"
   when: traefik_binary_url.endswith(".tar.gz")
 
 - name: Copy Expanded Traefik binary only to bin path
@@ -81,7 +88,6 @@
     owner: root
     group: root
     mode: 0755
-    force: "{{ traefik_update }}"
   when: traefik_binary_url.endswith(".tar.gz")
 
 - name: Setup log rotation if needed
