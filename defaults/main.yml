@@ -18,6 +18,7 @@ traefik_update: false
 traefik_manage_service: true
 traefik_service_enabled: true
 traefik_service_state: started
+traefik_environment: {}
 
 traefik_log_rotation: true
 traefik_log_dir: /var/log/traefik
