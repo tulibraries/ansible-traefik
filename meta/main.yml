@@ -2,6 +2,8 @@
 galaxy_info:
   author: Elie Charra
   description: Ansible role to deploy traefik binary and systemd unit
+  namespace: tulibraries
+  role-name: traefik
   company: Kibatic
   license: MIT
   min_ansible_version: 2.2

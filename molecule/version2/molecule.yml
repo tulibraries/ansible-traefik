@@ -3,7 +3,6 @@
 scenario:
   name: version2
   test_sequence:
-    - lint
     - cleanup
     - destroy
     - dependency
@@ -20,25 +19,14 @@ dependency:
   role-file: requirements.yml
 driver:
   name: docker
-lint:
-  name: yamllint
-  options:
-    config-data:
-      ignore: |
-        "default/main.yml"
-        "molecule/version2/playbook.yml"
 platforms:
   - name: instance
-    image: centos:7
+    image: rockylinux:8
     command: /sbin/init
     privileged: true
     published_ports:
       - 0.0.0.0:9999:80/tcp
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
 verifier:
   name: testinfra
-  lint:
-    name: flake8
