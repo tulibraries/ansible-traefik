@@ -2,11 +2,44 @@
 # @see https://raw.githubusercontent.com/containous/traefik/master/contrib/systemd/traefik.service
 [Unit]
 Description=Traefik
+Documentation=https://docs.traefik.io
+After=network-online.target
+AssertFileIsExecutable={{ traefik_bin_path }}
+AssertPathExists={{ traefik_config_file }}
+{% for path in traefik_dynamic_configs | default([]) | map(attribute='dest') %}
+AssertPathExists={{ path }}
+{% endfor %}
 
 [Service]
 Type=notify
 ExecStart={{ traefik_bin_path }} --configFile={{ traefik_config_file }}
 Restart=on-failure
+WatchdogSec=1s
+
+{% if traefik_systemd_lockdown %}
+# lock down system access
+# prohibit any operating system and configuration modification
+ProtectSystem=strict
+# create separate, new (and empty) /tmp and /var/tmp filesystems
+PrivateTmp=true
+# make /home directories inaccessible
+ProtectHome=true
+# turns off access to physical devices (/dev/...)
+PrivateDevices=true
+# make kernel settings (procfs and sysfs) read-only
+ProtectKernelTunables=true
+# make cgroups /sys/fs/cgroup read-only
+ProtectControlGroups=true
+# limit file system access
+{% if traefik_systemd_rw_paths %}
+ReadWritePaths={{ traefik_systemd_rw_paths | join(',') }}
+{% endif %}
+ReadOnlyPaths={{ ([traefik_config_file] + (traefik_dynamic_configs | default([]) | map(attribute='dest') | list) + traefik_systemd_ro_paths) | join(',') }}
+# limit number of processes in this unit
+LimitNPROC=1
+# Limit the number of file descriptors
+LimitNOFILE=1048576
+{% endif %}
 
 [Install]
 WantedBy=multi-user.target
