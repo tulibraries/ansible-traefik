@@ -19,6 +19,13 @@ traefik_binary_url: https://github.com/containous/traefik/releases/download/v1.7
 traefik_tmp_path: "/tmp"
 traefik_bin_path: "{{ traefik_install_dir }}/traefik"
 traefik_config_file: /etc/traefik.toml
+# example variables for dynamic configs templates w/traefik version 2.x.x
+# traefik_dynamic_configs:
+#   - src: traefik-dynamic.toml
+#     dest: /etc/traefik-dynamic.toml
+# restart traefik on dynamic config changes
+# set this to false if using traefiks watch feature on those files
+traefik_dynamic_config_restart: true
 traefik_template: traefik.toml
 traefik_systemd_unit_template: traefik.service
 traefik_systemd_unit_dest: /etc/systemd/system/traefik.service
