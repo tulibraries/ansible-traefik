@@ -47,6 +47,11 @@
     enabled: true
   when: traefik_update
 
+- name: Install tar package
+  package:
+    name: tar
+    state: present
+
 - name: Download Untarred Traefik binary
   get_url:
     url: "{{ traefik_binary_url }}"
