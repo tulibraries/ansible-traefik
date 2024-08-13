@@ -51,9 +51,13 @@
   command: command -v tar
   register: tar_installed
   ignore_errors: true
+  changed_when: false # Used to idempotency
+
+- debug:
+    var: tar_installed
 
 - name: Install tar package
-  command: yum install tar
+  command: dnf install tar
   when: tar_installed.rc != 0
 
 - name: Download Untarred Traefik binary
