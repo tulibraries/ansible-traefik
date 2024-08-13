@@ -48,9 +48,7 @@
   when: traefik_update
 
 - name: Install tar package
-  package:
-    name: tar
-    state: present
+  ansible.builtin.shell: dnf install tar
 
 - name: Download Untarred Traefik binary
   get_url:
