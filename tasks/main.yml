@@ -47,6 +47,19 @@
     enabled: true
   when: traefik_update
 
+- name: Check if tar is installed
+  command: command -v tar
+  register: tar_installed
+  ignore_errors: true
+  changed_when: false # Used to idempotency
+
+- debug:
+    var: tar_installed
+
+- name: Install tar package
+  command: dnf install tar
+  when: tar_installed.rc != 0
+
 - name: Download Untarred Traefik binary
   get_url:
     url: "{{ traefik_binary_url }}"

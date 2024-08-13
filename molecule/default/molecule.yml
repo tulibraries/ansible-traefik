@@ -10,8 +10,8 @@ scenario:
     - create
     - prepare
     - converge
-    - idempotence
     - side_effect
+    - idempotence
     - verify
     - cleanup
     - destroy
@@ -27,5 +27,9 @@ platforms:
     privileged: true
 provisioner:
   name: ansible
+  config_options:
+    defaults:
+      stdout_callback: debug
+      stderr_callback: debug
 verifier:
   name: testinfra
