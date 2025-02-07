@@ -22,14 +22,19 @@ driver:
   name: docker
 platforms:
   - name: instance
-    image: rockylinux:8
+    image: geerlingguy/docker-rockylinux9-ansible:latest
     command: /sbin/init
     privileged: true
+    pre_build_image: true
+    cgroupns_mode: host
+    capabilities:
+      - SYS_ADMIN
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    tmpfs:
+      - /run
+      - /tmp
 provisioner:
   name: ansible
-  config_options:
-    defaults:
-      stdout_callback: debug
-      stderr_callback: debug
 verifier:
   name: testinfra
