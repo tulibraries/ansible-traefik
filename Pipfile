@@ -12,7 +12,7 @@ molecule-docker = "*"
 pytest-testinfra= "*"
 
 [packages]
-ansible = "*"
+ansible = "==10.7.0"
 
 [requires]
 python_version = "3.12"

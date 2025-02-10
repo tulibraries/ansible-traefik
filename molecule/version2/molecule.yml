@@ -21,11 +21,20 @@ driver:
   name: docker
 platforms:
   - name: instance
-    image: rockylinux:8
+    image: geerlingguy/docker-rockylinux9-ansible:latest
     command: /sbin/init
     privileged: true
     published_ports:
       - 0.0.0.0:9999:80/tcp
+    pre_build_image: true
+    cgroupns_mode: host
+    capabilities:
+      - SYS_ADMIN
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    tmpfs:
+      - /run
+      - /tmp
 provisioner:
   name: ansible
 verifier:
