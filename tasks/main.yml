@@ -1,5 +1,50 @@
 # tasks file for kibatic.traefik
 ---
+- name: Check if tar is installed
+  command: command -v tar
+  register: tar_installed
+  ignore_errors: true
+  changed_when: false # Used to idempotency
+
+- name: Install tar package
+  command: dnf install tar -y
+  when: tar_installed.rc != 0
+
+- name: Download Untarred Traefik binary
+  get_url:
+    url: "{{ traefik_binary_url }}"
+    dest: "{{ traefik_bin_path }}"
+    owner: root
+    group: root
+    mode: 0755
+    force: "{{ traefik_update }}"
+  when: not traefik_binary_url.endswith(".tar.gz")
+
+- name: Ensure tmp directory
+  file:
+    path: "{{ traefik_tmp_path }}"
+    state: directory
+  when: traefik_binary_url.endswith(".tar.gz")
+
+- name: Download & Expand Tarred Traefik binary
+  unarchive:
+    src: "{{ traefik_binary_url }}"
+    creates: "{{ traefik_tmp_path }}/traefik"
+    remote_src: true
+    dest: "{{ traefik_tmp_path }}"
+  when: traefik_binary_url.endswith(".tar.gz")
+
+- name: Copy Expanded Traefik binary only to bin path
+  copy:
+    src: "{{ traefik_tmp_path }}/traefik"
+    remote_src: true
+    dest: "{{ traefik_bin_path }}"
+    owner: root
+    group: root
+    mode: 0755
+    force: "{{ traefik_update }}"
+  when: traefik_binary_url.endswith(".tar.gz")
+
 - name: Create traefik systemd unit
   template:
     src: "{{ traefik_systemd_unit_template }}.j2"
@@ -40,61 +85,15 @@
   with_items: "{{ traefik_dynamic_configs | list }}"
   when: traefik_dynamic_configs is defined
 
+- name: Run handlers now so systemd is reloaded
+  meta: flush_handlers
+
 - name: Ensure traefik service is stopped before traefik update
   service:
     name: traefik
     state: stopped
     enabled: true
   when: traefik_update
-
-- name: Check if tar is installed
-  command: command -v tar
-  register: tar_installed
-  ignore_errors: true
-  changed_when: false # Used to idempotency
-
-- debug:
-    var: tar_installed
-
-- name: Install tar package
-  command: dnf install tar
-  when: tar_installed.rc != 0
-
-- name: Download Untarred Traefik binary
-  get_url:
-    url: "{{ traefik_binary_url }}"
-    dest: "{{ traefik_bin_path }}"
-    owner: root
-    group: root
-    mode: 0755
-    force: "{{ traefik_update }}"
-  when: not traefik_binary_url.endswith(".tar.gz")
-
-
-- name: Ensure tmp directory
-  file:
-    path: "{{ traefik_tmp_path }}"
-    state: directory
-  when: traefik_binary_url.endswith(".tar.gz")
-
-- name: Download & Expand Tarred Traefik binary
-  unarchive:
-    src: "{{ traefik_binary_url }}"
-    creates: "{{ traefik_tmp_path }}/traefik"
-    remote_src: true
-    dest: "{{ traefik_tmp_path }}"
-  when: traefik_binary_url.endswith(".tar.gz")
-
-- name: Copy Expanded Traefik binary only to bin path
-  copy:
-    src: "{{ traefik_tmp_path }}/traefik"
-    remote_src: true
-    dest: "{{ traefik_bin_path }}"
-    owner: root
-    group: root
-    mode: 0755
-    force: "{{ traefik_update }}"
-  when: traefik_binary_url.endswith(".tar.gz")
 
 - name: Setup log rotation if needed
   template:
