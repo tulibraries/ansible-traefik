@@ -4,15 +4,17 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-requests = "*"
+ansible-lint = "*"
 docker = "*"
 pytest = "*"
-molecule = "*"
-molecule-docker = "*"
+
 pytest-testinfra= "*"
 
 [packages]
 ansible = "==10.7.0"
+molecule = "*"
+molecule-docker = "*"
+requests = "*"
 
 [requires]
 python_version = "3.12"
