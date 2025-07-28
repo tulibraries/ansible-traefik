@@ -6,18 +6,12 @@ galaxy_info:
   role_name: traefik
   company: Kibatic
   license: MIT
-  min_ansible_version: 2.2
+  min_ansible_version: "2.2"
   platforms:
-    - name: Ubuntu
-      versions:
-        - trusty
-        - xenial
-    - name: Debian
-      versions:
-        - jessie
     - name: EL
       versions:
-        - 7
+        - "8"
+        - "9"
   galaxy_tags:
     - docker
     - reverseproxy

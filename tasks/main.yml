@@ -1,116 +1,120 @@
 # tasks file for kibatic.traefik
 ---
 - name: Check if tar is installed
-  command: command -v tar
+  ansible.builtin.command: command -v tar
   register: tar_installed
   ignore_errors: true
   changed_when: false # Used to idempotency
 
 - name: Install tar package
-  command: dnf install tar -y
+  ansible.builtin.command: dnf install tar -y
   when: tar_installed.rc != 0
 
 - name: Download Untarred Traefik binary
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ traefik_binary_url }}"
     dest: "{{ traefik_bin_path }}"
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
     force: "{{ traefik_update }}"
   when: not traefik_binary_url.endswith(".tar.gz")
 
 - name: Ensure tmp directory
-  file:
+  ansible.builtin.file:
     path: "{{ traefik_tmp_path }}"
     state: directory
+    mode: "1777"
   when: traefik_binary_url.endswith(".tar.gz")
 
 - name: Download & Expand Tarred Traefik binary
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ traefik_binary_url }}"
     creates: "{{ traefik_tmp_path }}/traefik"
     remote_src: true
     dest: "{{ traefik_tmp_path }}"
+    mode: "1777"
   when: traefik_binary_url.endswith(".tar.gz")
 
 - name: Copy Expanded Traefik binary only to bin path
-  copy:
+  ansible.builtin.copy:
     src: "{{ traefik_tmp_path }}/traefik"
     remote_src: true
     dest: "{{ traefik_bin_path }}"
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
     force: "{{ traefik_update }}"
   when: traefik_binary_url.endswith(".tar.gz")
 
 - name: Create traefik systemd unit
-  template:
+  ansible.builtin.template:
     src: "{{ traefik_systemd_unit_template }}.j2"
     dest: "{{ traefik_systemd_unit_dest }}"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify:
     - Reload traefik unit
     - Restart traefik
 
 - name: Ensure install & config directory exists
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
+    mode: "0644"
   with_items:
     - "{{ traefik_install_dir }}"
 
 - name: Ensure /etc/traefik exists
-  file:
+  ansible.builtin.file:
     path: /etc/traefik
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
 - name: Copy traefik config file
-  template:
+  ansible.builtin.template:
     src: "{{ traefik_template }}.j2"
     dest: "{{ traefik_config_file }}"
     owner: root
     group: root
-    mode: 0744
+    mode: "0744"
   notify:
     - Restart traefik
 
 - name: Copy traefik dynamic config files (if traevik v2.x.x & file provider)
-  template:
+  ansible.builtin.template:
     src: "{{ item.src }}.j2"
     dest: "{{ item.dest }}"
     owner: root
     group: root
-    mode: 0744
+    mode: "0744"
   notify:
     - Restart traefik
   with_items: "{{ traefik_dynamic_configs | list }}"
   when: traefik_dynamic_configs is defined
 
 - name: Run handlers now so systemd is reloaded
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Ensure traefik service is stopped before traefik update
-  service:
+  ansible.builtin.service:
     name: traefik
     state: stopped
     enabled: true
   when: traefik_update
 
 - name: Setup log rotation if needed
-  template:
+  ansible.builtin.template:
     src: logrotate-traefik.j2
     dest: "{{ traefik_logrotate_config_path }}"
+    mode: "0644"
   when: traefik_log_rotation
 
 - name: Ensure traefik service is enabled and running
-  systemd:
+  ansible.builtin.systemd:
     name: traefik
     state: "{{ traefik_service_state }}"
     enabled: "{{ traefik_service_enabled }}"
