@@ -7,8 +7,8 @@ verify_ssl = true
 ansible-lint = "*"
 docker = "*"
 pytest = "*"
-
 pytest-testinfra= "*"
+pydantic = "*"
 
 [packages]
 ansible = "==12.1.0"
