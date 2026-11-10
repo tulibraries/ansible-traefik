@@ -1,14 +1,9 @@
 # tasks file for kibatic.traefik
 ---
-- name: Check if tar is installed
-  ansible.builtin.command: command -v tar
-  register: tar_installed
-  ignore_errors: true
-  changed_when: false # Used to idempotency
-
-- name: Install tar package
-  ansible.builtin.command: dnf install tar -y
-  when: tar_installed.rc != 0
+- name: Ensure tar is installed
+  ansible.builtin.package:
+    name: tar
+    state: present
 
 - name: Download Untarred Traefik binary
   ansible.builtin.get_url:
@@ -33,7 +28,7 @@
     creates: "{{ traefik_tmp_path }}/traefik"
     remote_src: true
     dest: "{{ traefik_tmp_path }}"
-    mode: "1777"
+    mode: "0755"
   when: traefik_binary_url.endswith(".tar.gz")
 
 - name: Copy Expanded Traefik binary only to bin path
@@ -62,7 +57,7 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    mode: "0644"
+    mode: "0755"
   with_items:
     - "{{ traefik_install_dir }}"
 
@@ -80,7 +75,7 @@
     dest: "{{ traefik_config_file }}"
     owner: root
     group: root
-    mode: "0744"
+    mode: "0644"
   notify:
     - Restart traefik
 
