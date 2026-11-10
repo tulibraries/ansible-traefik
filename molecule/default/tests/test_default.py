@@ -41,7 +41,7 @@ def test_traefik_services(host):
 
 
 @pytest.mark.parametrize('path,path_type,user,group,mode', [
-    ('/etc/traefik.toml', 'file', 'root', 'root', 0o744)
+    ('/etc/traefik.toml', 'file', 'root', 'root', 0o644)
     ])
 def test_traefik_paths(host, path, path_type, user, group, mode):
     """
