@@ -1,9 +1,14 @@
 # tasks file for kibatic.traefik
 ---
-- name: Ensure tar is installed
-  ansible.builtin.package:
-    name: tar
-    state: present
+- name: Check if tar is installed
+  ansible.builtin.command: command -v tar
+  register: tar_installed
+  ignore_errors: true
+  changed_when: false # Used to idempotency
+
+- name: Install tar package
+  ansible.builtin.command: dnf install tar -y
+  when: tar_installed.rc != 0
 
 - name: Download Untarred Traefik binary
   ansible.builtin.get_url:
