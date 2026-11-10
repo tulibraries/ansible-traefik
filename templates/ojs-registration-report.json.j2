@@ -1,0 +1,17 @@
+{
+  "log_globs": {{ ojs_report_log_globs | to_json }},
+  "sites": {{ ojs_report_sites | to_json }},
+  "report_timezone": {{ ojs_report_timezone | to_json }},
+  "report_period_hours": {{ ojs_report_period_hours | to_json }},
+  "registration_ip_retention_days": {{ ojs_report_registration_ip_retention_days | to_json }},
+  "report_retention_days": {{ ojs_report_retention_days | to_json }},
+  "state_file": {{ ojs_report_state_file | to_json }},
+  "report_dir": {{ ojs_report_dir | to_json }},
+  "latest_report": {{ ojs_report_latest | to_json }},
+  "max_timeline_events_per_ip": {{ ojs_report_max_timeline_events_per_ip | to_json }},
+  "max_detail_events": {{ ojs_report_max_detail_events | to_json }},
+  "max_error_groups": {{ ojs_report_max_error_groups | to_json }},
+  "teams_enabled": {{ ojs_report_teams_enabled | to_json }},
+  "teams_webhook_file": {{ ojs_report_teams_webhook_file | to_json }},
+  "teams_max_message_bytes": {{ ojs_report_teams_max_message_bytes | to_json }}
+}

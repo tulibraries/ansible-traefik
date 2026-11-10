@@ -62,6 +62,39 @@ $ ansible-playbook playbook.yml -t traefik --extra-vars "traefik_update=true"
 
 Use same command if you want to downgrade.
 
+Nightly OJS registration activity report
+----------------------------------------
+
+The role can install a review-oriented report collector for Traefik JSON
+access logs. It is disabled by default. Enable it for the inventory that owns
+the production OJS sites:
+
+```yml
+ojs_report_enabled: true
+ojs_report_sites:
+  - name: tuljournals.temple.edu
+    hosts:
+      - tuljournals.temple.edu
+  - name: tupjournals.temple.edu
+    hosts:
+      - tupjournals.temple.edu
+ojs_report_timezone: America/New_York
+```
+
+The collector runs at 02:15, reads the preceding 24 hours plus rotated access
+logs, and writes reports under `/var/lib/ojs-registration-report/`. It keeps
+report files for seven days and keeps registration IP state for seven days so
+activity on a later night remains associated with a recent registration. Registrations, activations, and logins
+are reported as observed requests, not confirmed success; upload pages and
+static upload scripts are distinguished from actual upload attempts.
+
+Optional Teams delivery uses a Microsoft Teams Workflows webhook. Keep the
+webhook URL in Ansible Vault as `ojs_report_teams_webhook_url`, then set
+`ojs_report_teams_enabled: true`. The role writes the URL to a root-only file
+and sends a size-limited summary after each report. Do not commit the webhook
+URL to inventory or role files. The Teams summary omits IP addresses, usernames,
+request paths, and activation tokens; the detailed report remains on the host.
+
 License
 -------
 
