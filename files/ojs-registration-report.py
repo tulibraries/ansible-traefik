@@ -78,6 +78,11 @@ def parse_time(value: Any) -> Optional[dt.datetime]:
     if not value:
         return None
     text = str(value).strip()
+    text = re.sub(
+        r"(\d{2}:\d{2}:\d{2})\.(\d+)",
+        lambda m: m.group(1) + "." + (m.group(2) + "000000")[:6],
+        text,
+    )
     if text.endswith("Z"):
         text = text[:-1] + "+00:00"
     try:
