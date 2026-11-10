@@ -2,5 +2,50 @@
 
 - name: Converge
   hosts: all
+  vars:
+    ojs_report_enabled: true
+    ojs_report_sites:
+      - name: tuljournals.temple.edu
+        hosts:
+          - tuljournals.temple.edu
+      - name: tupjournals.temple.edu
+        hosts:
+          - tupjournals.temple.edu
+    ojs_report_log_globs:
+      - /etc/traefik/logs/access.log
+    ojs_report_timezone: UTC
   roles:
     - role: ansible-traefik
+
+  tasks:
+    - name: Create a fixture access log directory
+      ansible.builtin.file:
+        path: /etc/traefik/logs
+        state: directory
+        mode: "0750"
+
+    - name: Write representative Traefik access-log fixture
+      ansible.builtin.copy:
+        dest: /etc/traefik/logs/access.log
+        mode: "0640"
+        # yamllint disable rule:line-length
+        content: |
+          {"StartUTC":"2030-01-02T05:00:00Z","ClientAddr":"198.51.100.10:1234","RequestHost":"tuljournals.temple.edu","RequestMethod":"POST","RequestPath":"/index.php/alpha/user/register","DownstreamStatus":200}
+          {"StartUTC":"2030-01-02T05:00:00Z","ClientAddr":"198.51.100.10:1234","RequestHost":"tuljournals.temple.edu","RequestMethod":"POST","RequestPath":"/index.php/beta/user/register","DownstreamStatus":302}
+          {"StartUTC":"2030-01-02T05:00:00Z","ClientAddr":"198.51.100.10:1234","RequestHost":"tuljournals.temple.edu","RequestMethod":"GET","RequestPath":"/index.php/alpha/user/activate?username=reader&key=secret","DownstreamStatus":200}
+          {"StartUTC":"2030-01-02T05:00:00Z","ClientAddr":"198.51.100.10:1234","RequestHost":"tuljournals.temple.edu","RequestMethod":"POST","RequestPath":"/index.php/alpha/submission/upload","DownstreamStatus":201}
+          {"StartUTC":"2030-01-02T05:00:00Z","ClientAddr":"198.51.100.10:1234","RequestHost":"tuljournals.temple.edu","RequestMethod":"GET","RequestPath":"/index.php/alpha/submission/upload","DownstreamStatus":200}
+        # yamllint enable rule:line-length
+
+    - name: Generate report from fixture access log
+      ansible.builtin.command:
+        cmd: >-
+          {{ ojs_report_script }} --config {{ ojs_report_config }} --now
+          2030-01-02T05:10:00Z
+      register: ojs_report_run
+      changed_when: false
+
+    - name: Confirm fixture report was generated
+      ansible.builtin.assert:
+        that:
+          - ojs_report_run.rc == 0

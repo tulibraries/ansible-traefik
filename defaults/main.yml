@@ -25,3 +25,30 @@ traefik_logrotate_config_path: /etc/logrotate.d/traefik
 traefik_logrotate_postrotate_cmd: 'systemctl kill --signal="USR1" traefik'
 traefik_logrotate_size: 100M
 traefik_logrotate_number: 5
+
+# Nightly OJS production registration activity report. Disabled by default so
+# existing role consumers do not install a site-specific collector.
+ojs_report_enabled: false
+ojs_report_script: /usr/local/sbin/ojs-registration-report
+ojs_report_config: /etc/ojs-registration-report.json
+ojs_report_state_file: /var/lib/ojs-registration-report/state.json
+ojs_report_dir: /var/lib/ojs-registration-report/reports
+ojs_report_latest: /var/lib/ojs-registration-report/latest.md
+ojs_report_log: /var/log/ojs-registration-report.log
+ojs_report_log_globs:
+  - /etc/traefik/logs/access.log
+  - /etc/traefik/logs/access.log.*
+ojs_report_sites: []
+ojs_report_timezone: UTC
+ojs_report_period_hours: 24
+ojs_report_registration_ip_retention_days: 7
+ojs_report_retention_days: 7
+ojs_report_cron_minute: "15"
+ojs_report_cron_hour: "2"
+ojs_report_max_timeline_events_per_ip: 500
+ojs_report_max_detail_events: 500
+ojs_report_max_error_groups: 100
+ojs_report_teams_enabled: false
+ojs_report_teams_webhook_file: /etc/ojs-registration-report/teams-webhook-url
+ojs_report_teams_webhook_url: ""
+ojs_report_teams_max_message_bytes: 28000

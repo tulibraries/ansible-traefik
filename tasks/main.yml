@@ -120,3 +120,93 @@
     enabled: "{{ traefik_service_enabled }}"
     daemon_reload: true
   when: traefik_manage_service
+
+- name: Configure OJS report collector
+  when: ojs_report_enabled | default(false) | bool
+  block:
+    - name: Install Python runtime and cron daemon
+      ansible.builtin.package:
+        name:
+          - python3
+          - cronie
+        state: present
+
+    - name: Ensure cron daemon is running
+      ansible.builtin.service:
+        name: crond
+        state: started
+        enabled: true
+
+    - name: Create OJS report directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: "0750"
+      loop:
+        - "{{ ojs_report_dir }}"
+        - "{{ ojs_report_state_file | dirname }}"
+
+    - name: Create Teams webhook secret directory
+      ansible.builtin.file:
+        path: "{{ ojs_report_teams_webhook_file | dirname }}"
+        state: directory
+        owner: root
+        group: root
+        mode: "0700"
+      when: ojs_report_teams_enabled | bool
+
+    - name: Require a Teams webhook secret when delivery is enabled
+      ansible.builtin.assert:
+        that:
+          - ojs_report_teams_webhook_url | length > 0
+        fail_msg: >-
+          ojs_report_teams_enabled is true but ojs_report_teams_webhook_url is
+          empty; provide it through Ansible Vault.
+      when: ojs_report_teams_enabled | bool
+
+    - name: Install Teams webhook secret
+      ansible.builtin.copy:
+        content: "{{ ojs_report_teams_webhook_url }}\n"
+        dest: "{{ ojs_report_teams_webhook_file }}"
+        owner: root
+        group: root
+        mode: "0600"
+      no_log: true
+      when: ojs_report_teams_enabled | bool
+
+    - name: Install OJS report collector
+      ansible.builtin.copy:
+        src: ojs-registration-report.py
+        dest: "{{ ojs_report_script }}"
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Install OJS report configuration
+      ansible.builtin.template:
+        src: ojs-registration-report.json.j2
+        dest: "{{ ojs_report_config }}"
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Run OJS report nightly
+      ansible.builtin.cron:
+        name: OJS registration activity report
+        user: root
+        minute: "{{ ojs_report_cron_minute }}"
+        hour: "{{ ojs_report_cron_hour }}"
+        job: >-
+          {{ ojs_report_script }} --config {{ ojs_report_config }} >>
+          {{ ojs_report_log }} 2>&1
+        state: present
+
+    - name: Disable cron mail for OJS report
+      ansible.builtin.cron:
+        name: MAILTO
+        user: root
+        env: true
+        value: ""
+        state: present

@@ -1,0 +1,21 @@
+---
+- name: Prepare retention fixture
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Create report directory for retention fixture
+      ansible.builtin.file:
+        path: /var/lib/ojs-registration-report/reports
+        state: directory
+        owner: root
+        group: root
+        mode: "0750"
+
+    - name: Create an old report fixture for retention testing
+      ansible.builtin.copy:
+        dest: /var/lib/ojs-registration-report/reports/report-2000-01-01.md
+        content: old report
+        owner: root
+        group: root
+        mode: "0640"
