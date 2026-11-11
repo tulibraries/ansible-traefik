@@ -14,6 +14,7 @@
     ojs_report_log_globs:
       - /etc/traefik/logs/access.log
     ojs_report_timezone: UTC
+    ojs_report_traffic_enabled: true
   roles:
     - role: ansible-traefik
 

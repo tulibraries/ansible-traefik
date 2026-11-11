@@ -36,3 +36,18 @@ def test_ojs_report_output(host):
     assert "secret" not in contents
     assert "upload attempt" in contents
     assert "upload page or asset" in contents
+    assert "Traffic overview" in contents
+    assert "Busiest hour: **2030-01-02 05:00 AM UTC** (5 requests)" in contents
+
+
+def test_ojs_traffic_graph(host):
+    graph = host.file("/var/lib/ojs-registration-report/traffic/traffic-2030-01-02.png")
+    latest = host.file("/var/lib/ojs-registration-report/traffic/latest-traffic.png")
+    assert graph.exists
+    assert graph.is_file
+    assert graph.size > 100
+    assert latest.exists
+    assert latest.size == graph.size
+    png_header = host.run("python3 -c 'print(open(\"/var/lib/ojs-registration-report/traffic/latest-traffic.png\", \"rb\").read(8))'")
+    assert png_header.rc == 0
+    assert "b'\\x89PNG\\r\\n\\x1a\\n'" in png_header.stdout

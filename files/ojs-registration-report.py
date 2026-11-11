@@ -9,6 +9,7 @@ was created, an email was confirmed, or a login succeeded.
 from __future__ import annotations
 
 import argparse
+import base64
 import collections
 import datetime as dt
 import gzip
@@ -17,9 +18,11 @@ import ipaddress
 import json
 import os
 import re
+import struct
 import tempfile
 import urllib.error
 import urllib.request
+import zlib
 from pathlib import Path
 from typing import Any, Optional
 from urllib.parse import parse_qs, unquote, urlsplit
@@ -65,6 +68,7 @@ MALFORMED_MARKERS = (
     "/phpmyadmin",
 )
 REPORT_FILENAME = re.compile(r"^report-(\d{4}-\d{2}-\d{2})\.md$")
+TRAFFIC_FILENAME = re.compile(r"^traffic-(\d{4}-\d{2}-\d{2})\.png$")
 
 
 def first_value(record: dict[str, Any], *names: str) -> Any:
@@ -319,6 +323,163 @@ def write_text_atomic(path: Path, text: str, mode: int = 0o640) -> None:
             os.unlink(temporary)
 
 
+def write_binary_atomic(path: Path, data: bytes, mode: int = 0o640) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, temporary = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
+    try:
+        with os.fdopen(fd, "wb") as handle:
+            handle.write(data)
+        os.chmod(temporary, mode)
+        os.replace(temporary, path)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
+
+
+def png_chunk(kind: bytes, data: bytes) -> bytes:
+    return (
+        struct.pack(">I", len(data))
+        + kind
+        + data
+        + struct.pack(">I", zlib.crc32(kind + data) & 0xFFFFFFFF)
+    )
+
+
+def chart_png(width: int, height: int, series: list[list[int]]) -> bytes:
+    """Create a small dependency-free line chart as an RGB PNG.
+
+    Labels and the legend are sent as text in the Adaptive Card. Keeping the
+    bitmap renderer here avoids requiring matplotlib on the Traefik host.
+    """
+    width = min(1024, max(640, int(width)))
+    height = min(1024, max(360, int(height)))
+    pixels = bytearray([255] * (width * height * 3))
+
+    def pixel(x: int, y: int, color: tuple[int, int, int]) -> None:
+        if 0 <= x < width and 0 <= y < height:
+            offset = (y * width + x) * 3
+            pixels[offset : offset + 3] = bytes(color)
+
+    def line(x1: int, y1: int, x2: int, y2: int, color: tuple[int, int, int], thickness: int = 1) -> None:
+        dx = abs(x2 - x1)
+        dy = abs(y2 - y1)
+        steps = max(dx, dy, 1)
+        for step in range(steps + 1):
+            x = round(x1 + (x2 - x1) * step / steps)
+            y = round(y1 + (y2 - y1) * step / steps)
+            radius = thickness // 2
+            for yy in range(y - radius, y + radius + 1):
+                for xx in range(x - radius, x + radius + 1):
+                    pixel(xx, yy, color)
+
+    margin_left, margin_right = 64, 28
+    margin_top, margin_bottom = 24, 48
+    plot_width = width - margin_left - margin_right
+    plot_height = height - margin_top - margin_bottom
+    max_value = max((value for values in series for value in values), default=0)
+    scale = max(1, max_value)
+    grid = (226, 230, 235)
+    axis = (120, 128, 138)
+
+    for row in range(6):
+        y = margin_top + round(plot_height * row / 5)
+        line(margin_left, y, width - margin_right, y, grid)
+    point_count = max((len(values) for values in series), default=0)
+    if point_count > 1:
+        for column in range(point_count):
+            x = margin_left + round(plot_width * column / (point_count - 1))
+            line(x, margin_top, x, height - margin_bottom, grid)
+    line(margin_left, margin_top, margin_left, height - margin_bottom, axis, 2)
+    line(margin_left, height - margin_bottom, width - margin_right, height - margin_bottom, axis, 2)
+
+    colors = [(31, 111, 235), (222, 79, 58), (39, 148, 90), (151, 91, 201), (214, 137, 32)]
+    for index, values in enumerate(series):
+        if not values:
+            continue
+        color = colors[index % len(colors)]
+        points = []
+        for point, value in enumerate(values):
+            x = margin_left if len(values) == 1 else margin_left + round(plot_width * point / (len(values) - 1))
+            y = height - margin_bottom - round(plot_height * value / scale)
+            points.append((x, y))
+        for first, second in zip(points, points[1:]):
+            line(*first, *second, color, 4)
+        for x, y in points:
+            line(x - 3, y, x + 3, y, color, 5)
+            line(x, y - 3, x, y + 3, color, 5)
+
+    rows = b"".join(b"\x00" + pixels[row * width * 3 : (row + 1) * width * 3] for row in range(height))
+    return (
+        b"\x89PNG\r\n\x1a\n"
+        + png_chunk(b"IHDR", struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0))
+        + png_chunk(b"IDAT", zlib.compress(rows, 6))
+        + png_chunk(b"IEND", b"")
+    )
+
+
+def traffic_summary(
+    events: list[dict[str, Any]],
+    start: dt.datetime,
+    end: dt.datetime,
+    sites: list[dict[str, Any]],
+    timezone: ZoneInfo,
+) -> dict[str, Any]:
+    site_names = [str(site.get("name")) for site in sites if site.get("name")]
+    site_names.extend(sorted({event["site"] for event in events if event["site"] not in site_names}))
+    first_hour = start.replace(minute=0, second=0, microsecond=0)
+    last_hour = end.replace(minute=0, second=0, microsecond=0)
+    hours = []
+    current = first_hour
+    while current <= last_hour:
+        hours.append(current)
+        current += dt.timedelta(hours=1)
+
+    counts = {hour: collections.Counter({site: 0 for site in site_names}) for hour in hours}
+    for event in events:
+        if not start <= event["time"] <= end:
+            continue
+        bucket = event["time"].replace(minute=0, second=0, microsecond=0)
+        if bucket in counts:
+            counts[bucket][event["site"]] += 1
+
+    totals = {hour: sum(counts[hour].values()) for hour in hours}
+    peak_hour = max(hours, key=lambda hour: (totals[hour], hour), default=None)
+    return {
+        "sites": site_names,
+        "hours": hours,
+        "counts": counts,
+        "totals": totals,
+        "peak_hour": peak_hour,
+        "peak_total": totals.get(peak_hour, 0) if peak_hour else 0,
+        "timezone": timezone,
+    }
+
+
+def hour_label(value: dt.datetime, timezone: ZoneInfo) -> str:
+    return value.astimezone(timezone).strftime("%Y-%m-%d %I:00 %p %Z")
+
+
+def traffic_text(traffic: Optional[dict[str, Any]]) -> list[str]:
+    if not traffic:
+        return []
+    peak_hour = traffic["peak_hour"]
+    lines = ["## Traffic overview", ""]
+    if peak_hour is None:
+        lines.append("- No requests were observed for the configured OJS sites.")
+        return lines
+    lines.extend([
+        f"- Requests observed: **{sum(traffic['totals'].values()):,}**",
+        f"- Busiest hour: **{hour_label(peak_hour, traffic['timezone'])}** ({traffic['peak_total']:,} requests)",
+    ])
+    for site in traffic["sites"]:
+        peak = max(traffic["hours"], key=lambda hour: (traffic["counts"][hour][site], hour), default=None)
+        count = traffic["counts"][peak][site] if peak else 0
+        lines.append(f"- {markdown_cell(site)} busiest hour: **{hour_label(peak, traffic['timezone'])}** ({count:,} requests)" if peak else f"- {markdown_cell(site)}: **0** requests")
+    colors = ("blue", "red", "green", "purple", "orange")
+    lines.append("- Graph series: " + ", ".join(f"{colors[index % len(colors)]} = {site}" for index, site in enumerate(traffic["sites"])))
+    return lines
+
+
 def teams_text(summary: str, max_bytes: int) -> str:
     """Keep the privacy-safe Teams summary below the message-size limit."""
     if len(summary.encode("utf-8")) <= max_bytes:
@@ -342,6 +503,7 @@ def teams_summary(
     end: dt.datetime,
     timezone: ZoneInfo,
     coverage: dict[str, Any],
+    traffic: Optional[dict[str, Any]],
 ) -> str:
     """Create a useful Teams summary without user-level identifiers."""
     all_ips = set(by_ip) | {event["ip"] for event in high_risk}
@@ -379,6 +541,9 @@ def teams_summary(
         )
     else:
         lines.append("| - | - | 0 |")
+
+    if traffic:
+        lines.extend(["", *traffic_text(traffic)])
 
     lines.extend(["", "## Activity to review", ""])
     if repeated:
@@ -423,7 +588,12 @@ def teams_summary(
     return "\n".join(lines)
 
 
-def send_to_teams(webhook_file: Path, report_text: str, max_bytes: int) -> None:
+def send_to_teams(
+    webhook_file: Path,
+    report_text: str,
+    max_bytes: int,
+    graph_path: Optional[Path] = None,
+) -> None:
     try:
         webhook_url = webhook_file.read_text(encoding="utf-8").strip()
     except OSError as exc:
@@ -431,7 +601,36 @@ def send_to_teams(webhook_file: Path, report_text: str, max_bytes: int) -> None:
     if not webhook_url:
         raise RuntimeError("Teams webhook secret is empty")
 
-    payload = json.dumps({"text": teams_text(report_text, max_bytes)}).encode("utf-8")
+    summary = teams_text(report_text, max_bytes)
+    if graph_path:
+        try:
+            graph = base64.b64encode(graph_path.read_bytes()).decode("ascii")
+        except OSError as exc:
+            raise RuntimeError(f"traffic graph could not be read: {exc}") from exc
+        payload_value: dict[str, Any] = {
+            "type": "message",
+            "attachments": [{
+                "contentType": "application/vnd.microsoft.card.adaptive",
+                "contentUrl": None,
+                "content": {
+                    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                    "type": "AdaptiveCard",
+                    "version": "1.2",
+                    "body": [
+                        {"type": "TextBlock", "text": summary, "wrap": True},
+                        {
+                            "type": "Image",
+                            "url": f"data:image/png;base64,{graph}",
+                            "altText": "OJS requests per hour during the reporting period",
+                            "size": "Stretch",
+                        },
+                    ],
+                },
+            }],
+        }
+    else:
+        payload_value = {"text": summary}
+    payload = json.dumps(payload_value).encode("utf-8")
     request = urllib.request.Request(
         webhook_url,
         data=payload,
@@ -481,6 +680,34 @@ def cleanup_reports(
     return deleted
 
 
+def cleanup_traffic_graphs(
+    graph_dir: Path,
+    latest_path: Path,
+    report_date: dt.date,
+    retention_days: int,
+) -> int:
+    retention_days = max(1, retention_days)
+    cutoff = report_date - dt.timedelta(days=retention_days - 1)
+    deleted = 0
+    for candidate in graph_dir.glob("traffic-*.png"):
+        if candidate == latest_path:
+            continue
+        match = TRAFFIC_FILENAME.fullmatch(candidate.name)
+        if not match:
+            continue
+        try:
+            candidate_date = dt.date.fromisoformat(match.group(1))
+        except ValueError:
+            continue
+        if candidate_date < cutoff:
+            try:
+                candidate.unlink()
+                deleted += 1
+            except OSError:
+                continue
+    return deleted
+
+
 def markdown_cell(value: Any) -> str:
     return str(value if value not in (None, "") else "-").replace("|", "\\|").replace("\n", " ")
 
@@ -507,9 +734,16 @@ def report(
     start: dt.datetime,
     end: dt.datetime,
     config: dict[str, Any],
-) -> tuple[str, dict[str, Any], str]:
+) -> tuple[str, dict[str, Any], str, Optional[dict[str, Any]]]:
     timezone = ZoneInfo(str(config.get("report_timezone", "UTC")))
     period_events = sorted((event for event in events if start <= event["time"] <= end), key=lambda item: item["time"])
+    traffic = traffic_summary(
+        period_events,
+        start,
+        end,
+        config.get("sites", []),
+        timezone,
+    ) if config.get("traffic_enabled", False) else None
     registrations = [event for event in period_events if event["kind"] == "registration attempt"]
     registration_ips = {event["ip"] for event in registrations}
     activation_events = [event for event in period_events if event["kind"] == "activation observed activity"]
@@ -603,6 +837,9 @@ def report(
         )
     else:
         report_lines.append("| - | - | 0 |")
+
+    if traffic:
+        report_lines.extend(["", *traffic_text(traffic)])
 
     report_lines.extend(["", "## Activity to review", ""])
     if not repeated and not cross_journal and not high_risk:
@@ -713,6 +950,7 @@ def report(
         end,
         timezone,
         coverage,
+        traffic,
     )
     return "\n".join(report_lines), {
         "registration_ips": {
@@ -721,7 +959,7 @@ def report(
             if parse_time(details.get("last_registration")) and parse_time(details.get("last_registration")) >= end - retention
         },
         "last_run": iso(end),
-    }, teams_report
+    }, teams_report, traffic
 
 
 def main() -> int:
@@ -740,7 +978,7 @@ def main() -> int:
     events, coverage = read_logs(config.get("log_globs", []), config.get("sites", []))
     state_path = Path(config.get("state_file", "/var/lib/ojs-registration-report/state.json"))
     state = load_state(state_path)
-    text, new_state, teams_report = report(events, coverage, state, start, end, config)
+    text, new_state, teams_report, traffic = report(events, coverage, state, start, end, config)
 
     timezone = ZoneInfo(str(config.get("report_timezone", "UTC")))
     report_dir = Path(config.get("report_dir", "/var/lib/ojs-registration-report/reports"))
@@ -756,15 +994,42 @@ def main() -> int:
     write_text_atomic(report_path, text)
     write_text_atomic(latest_path, text)
     write_json_atomic(state_path, new_state)
+    graph_path = None
+    removed_graphs = 0
+    if traffic:
+        graph_dir = Path(config.get("traffic_dir", str(report_dir / "traffic")))
+        graph_name = f"traffic-{end.astimezone(timezone):%Y-%m-%d}.png"
+        graph_path = graph_dir / graph_name
+        latest_graph_path = Path(config.get("latest_traffic", str(graph_dir / "latest-traffic.png")))
+        removed_graphs = cleanup_traffic_graphs(
+            graph_dir,
+            latest_graph_path,
+            end.astimezone(timezone).date(),
+            int(config.get("report_retention_days", 7)),
+        )
+        series = [[traffic["counts"][hour][site] for hour in traffic["hours"]] for site in traffic["sites"]]
+        graph = chart_png(
+            int(config.get("traffic_width", 1200)),
+            int(config.get("traffic_height", 600)),
+            series,
+        )
+        write_binary_atomic(graph_path, graph)
+        write_binary_atomic(latest_graph_path, graph)
     if config.get("teams_enabled", False):
         send_to_teams(
             Path(config.get("teams_webhook_file", "/etc/ojs-registration-report/teams-webhook-url")),
             teams_report,
             int(config.get("teams_max_message_bytes", 28000)),
+            Path(config.get("latest_traffic", str(graph_path))) if traffic else None,
         )
         print("sent privacy-safe summary to Microsoft Teams")
     print(f"wrote {report_path}")
     print(f"removed old reports: {removed_reports}")
+    if traffic:
+        print(f"wrote {graph_path}")
+        print(f"removed old traffic graphs: {removed_graphs}")
+        if traffic["peak_hour"]:
+            print(f"busiest hour: {hour_label(traffic['peak_hour'], timezone)} ({traffic['peak_total']:,} requests)")
     print(f"registration attempts: {sum(event['kind'] == 'registration attempt' for event in events if start <= event['time'] <= end)}")
     return 0
 
