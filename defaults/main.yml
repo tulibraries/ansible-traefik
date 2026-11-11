@@ -48,6 +48,11 @@ ojs_report_cron_hour: "2"
 ojs_report_max_timeline_events_per_ip: 500
 ojs_report_max_detail_events: 500
 ojs_report_max_error_groups: 100
+ojs_report_traffic_enabled: false
+ojs_report_traffic_dir: /var/lib/ojs-registration-report/traffic
+ojs_report_latest_traffic: /var/lib/ojs-registration-report/traffic/latest-traffic.png
+ojs_report_traffic_width: 1024
+ojs_report_traffic_height: 600
 ojs_report_teams_enabled: false
 ojs_report_teams_webhook_file: /etc/ojs-registration-report/teams-webhook-url
 ojs_report_teams_webhook_url: ""

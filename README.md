@@ -79,6 +79,7 @@ ojs_report_sites:
     hosts:
       - tupjournals.temple.edu
 ojs_report_timezone: America/New_York
+ojs_report_traffic_enabled: true
 ```
 
 The collector runs at 02:15, reads the preceding 24 hours plus rotated access
@@ -88,11 +89,18 @@ activity on a later night remains associated with a recent registration. Registr
 are reported as observed requests, not confirmed success; upload pages and
 static upload scripts are distinguished from actual upload attempts.
 
+When traffic reporting is enabled, the collector also writes a per-site hourly
+PNG graph and includes the busiest hour in the Markdown report. The graph is
+written to `/var/lib/ojs-registration-report/traffic/` and retained for the
+same number of days as the reports.
+
 Optional Teams delivery uses a Microsoft Teams Workflows webhook. Keep the
 webhook URL in Ansible Vault as `ojs_report_teams_webhook_url`, then set
 `ojs_report_teams_enabled: true`. The role writes the URL to a root-only file
-and sends a size-limited summary after each report. Do not commit the webhook
-URL to inventory or role files. The Teams summary omits IP addresses, usernames,
+and sends a size-limited summary after each report. With traffic reporting
+enabled, the same webhook sends an Adaptive Card with the busiest hour and the
+graph embedded directly in the Teams message. Do not commit the webhook URL to
+inventory or role files. The Teams summary omits IP addresses, usernames,
 request paths, and activation tokens; the detailed report remains on the host.
 
 License

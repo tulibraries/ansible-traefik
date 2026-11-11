@@ -147,6 +147,7 @@
       loop:
         - "{{ ojs_report_dir }}"
         - "{{ ojs_report_state_file | dirname }}"
+        - "{{ ojs_report_traffic_dir }}"
 
     - name: Create Teams webhook secret directory
       ansible.builtin.file:
