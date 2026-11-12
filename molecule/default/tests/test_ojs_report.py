@@ -37,7 +37,8 @@ def test_ojs_report_output(host):
     assert "upload attempt" in contents
     assert "upload page or asset" in contents
     assert "Traffic overview" in contents
-    assert "Busiest hour: **2030-01-02 05:00 AM UTC** (5 requests)" in contents
+    assert "- tuljournals.temple.edu: **5 requests**; busiest hour: **2030-01-02 05:00 AM UTC** (5 requests)" in contents
+    assert "- tupjournals.temple.edu: **0** requests" in contents
 
 
 def test_ojs_traffic_graph(host):
