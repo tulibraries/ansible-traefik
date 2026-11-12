@@ -92,7 +92,8 @@ static upload scripts are distinguished from actual upload attempts.
 When traffic reporting is enabled, the collector also writes a per-site hourly
 PNG graph and includes the busiest hour in the Markdown report. The graph is
 written to `/var/lib/ojs-registration-report/traffic/` and retained for the
-same number of days as the reports.
+same number of days as the reports. The default chart is 480×270 pixels and is
+automatically reduced to stay under an 8,000-byte PNG budget for Teams.
 
 Optional Teams delivery uses a Microsoft Teams Workflows webhook. Keep the
 webhook URL in Ansible Vault as `ojs_report_teams_webhook_url`, then set

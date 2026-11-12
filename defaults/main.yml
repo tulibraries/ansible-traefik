@@ -51,8 +51,9 @@ ojs_report_max_error_groups: 100
 ojs_report_traffic_enabled: false
 ojs_report_traffic_dir: /var/lib/ojs-registration-report/traffic
 ojs_report_latest_traffic: /var/lib/ojs-registration-report/traffic/latest-traffic.png
-ojs_report_traffic_width: 1024
-ojs_report_traffic_height: 600
+ojs_report_traffic_width: 480
+ojs_report_traffic_height: 270
+ojs_report_traffic_max_png_bytes: 8000
 ojs_report_teams_enabled: false
 ojs_report_teams_webhook_file: /etc/ojs-registration-report/teams-webhook-url
 ojs_report_teams_webhook_url: ""

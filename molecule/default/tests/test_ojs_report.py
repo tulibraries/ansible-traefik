@@ -46,6 +46,7 @@ def test_ojs_traffic_graph(host):
     assert graph.exists
     assert graph.is_file
     assert graph.size > 100
+    assert graph.size < 8000
     assert latest.exists
     assert latest.size == graph.size
     png_header = host.run("python3 -c 'print(open(\"/var/lib/ojs-registration-report/traffic/latest-traffic.png\", \"rb\").read(8))'")

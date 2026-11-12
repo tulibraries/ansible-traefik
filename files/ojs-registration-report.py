@@ -351,8 +351,8 @@ def chart_png(width: int, height: int, series: list[list[int]]) -> bytes:
     Labels and the legend are sent as text in the Adaptive Card. Keeping the
     bitmap renderer here avoids requiring matplotlib on the Traefik host.
     """
-    width = min(1024, max(640, int(width)))
-    height = min(1024, max(360, int(height)))
+    width = min(1024, max(320, int(width)))
+    height = min(1024, max(180, int(height)))
     pixels = bytearray([255] * (width * height * 3))
 
     def pixel(x: int, y: int, color: tuple[int, int, int]) -> None:
@@ -417,6 +417,24 @@ def chart_png(width: int, height: int, series: list[list[int]]) -> bytes:
     )
 
 
+def traffic_graph_png(
+    width: int,
+    height: int,
+    series: list[list[int]],
+    max_bytes: int,
+) -> bytes:
+    """Render the chart, shrinking it until it fits the Teams payload budget."""
+    width = min(1024, max(320, int(width)))
+    height = min(1024, max(180, int(height)))
+    max_bytes = max(2000, int(max_bytes))
+    while True:
+        graph = chart_png(width, height, series)
+        if len(graph) <= max_bytes or (width == 320 and height == 180):
+            return graph
+        width = max(320, width * 3 // 4)
+        height = max(180, height * 3 // 4)
+
+
 def traffic_summary(
     events: list[dict[str, Any]],
     start: dt.datetime,
@@ -459,11 +477,11 @@ def hour_label(value: dt.datetime, timezone: ZoneInfo) -> str:
     return value.astimezone(timezone).strftime("%Y-%m-%d %I:00 %p %Z")
 
 
-def traffic_text(traffic: Optional[dict[str, Any]]) -> list[str]:
+def traffic_text(traffic: Optional[dict[str, Any]], compact: bool = False) -> list[str]:
     if not traffic:
         return []
     peak_hour = traffic["peak_hour"]
-    lines = ["## Traffic overview", ""]
+    lines = ["**Traffic overview**" if compact else "## Traffic overview", ""]
     if peak_hour is None:
         lines.append("- No requests were observed for the configured OJS sites.")
         return lines
@@ -515,11 +533,11 @@ def teams_summary(
     submission_visits = sum(event["kind"] == "submission page visit" for event in period_events)
 
     lines = [
-        "# OJS production registration activity summary",
+        "**OJS production registration activity summary**",
         "",
         f"Reporting period: **{local_time(start, timezone)} through {local_time(end, timezone)}**",
         "",
-        "## Summary",
+        "**Summary**",
         "",
         f"- Registration attempts: **{len(registrations)}** (observed POST requests)",
         f"- Distinct registration sources: **{len({event['ip'] for event in registrations})}**",
@@ -529,7 +547,7 @@ def teams_summary(
         f"- Submission-changing requests: **{submission_changes}**",
         f"- Upload attempts: **{upload_attempts}**",
         "",
-        "### Registration attempts by site and journal",
+        "**Registration attempts by site and journal**",
         "",
         "| Site | Journal | Attempts |",
         "| --- | --- | ---: |",
@@ -543,32 +561,32 @@ def teams_summary(
         lines.append("| - | - | 0 |")
 
     if traffic:
-        lines.extend(["", *traffic_text(traffic)])
+        lines.extend(["", *traffic_text(traffic, compact=True)])
 
-    lines.extend(["", "## Activity to review", ""])
+    lines.extend(["", "**Activity to review**", ""])
     if repeated:
-        lines.append("### Repeated registration attempts")
+        lines.append("**Repeated registration attempts**")
         lines.extend(
             f"- **{source_ids[ip]}**: {len(items)} attempts across {markdown_cell(', '.join(sorted({item['journal'] for item in items})))}"
             for ip, items in sorted(repeated.items())
         )
     if cross_journal:
-        lines.append("### Cross-journal registration attempts")
+        lines.append("**Cross-journal registration attempts**")
         lines.extend(
             f"- **{source_ids[ip]}**: observed attempts across {markdown_cell(', '.join(sorted({item['journal'] for item in items})))}"
             for ip, items in sorted(cross_journal.items())
         )
     if high_risk:
-        lines.append("### Upload and submission-changing requests")
+        lines.append("**Upload and submission-changing requests**")
         lines.extend(
             f"- {local_time(event['time'], timezone)} — **{source_ids.get(event['ip'], 'unassociated source')}** — {event['kind']} — {markdown_cell(event['site'])}/{markdown_cell(event['journal'])} — status `{markdown_cell(event['status'])}`"
             for event in high_risk[:100]
         )
     if followed:
-        lines.append("### Registration followed by submission or upload activity")
+        lines.append("**Registration followed by submission or upload activity**")
         lines.append(f"- **{len(followed)}** qualifying follow-up requests were observed from recent registration sources.")
     if repeated_errors:
-        lines.append("### Repeated errors")
+        lines.append("**Repeated errors**")
         lines.append(
             f"- **{len(repeated_errors)}** repeated error groups ({sum(len(items) for items in repeated_errors)} requests) were observed."
         )
@@ -577,7 +595,7 @@ def teams_summary(
 
     lines.extend([
         "",
-        "## Coverage",
+        "**Coverage**",
         "",
         f"- Matched log files: **{len(coverage['matched'])}**",
         f"- Invalid JSON lines: **{coverage['invalid_lines']}**",
@@ -601,12 +619,15 @@ def send_to_teams(
     if not webhook_url:
         raise RuntimeError("Teams webhook secret is empty")
 
-    summary = teams_text(report_text, max_bytes)
     if graph_path:
         try:
             graph = base64.b64encode(graph_path.read_bytes()).decode("ascii")
         except OSError as exc:
             raise RuntimeError(f"traffic graph could not be read: {exc}") from exc
+        # Reserve space for the card wrapper and the inline base64 image so a
+        # long review summary cannot make the whole Teams entity too large.
+        summary_budget = max(1000, max_bytes - len(graph) - 2048)
+        summary = teams_text(report_text, summary_budget)
         payload_value: dict[str, Any] = {
             "type": "message",
             "attachments": [{
@@ -629,6 +650,7 @@ def send_to_teams(
             }],
         }
     else:
+        summary = teams_text(report_text, max_bytes)
         payload_value = {"text": summary}
     payload = json.dumps(payload_value).encode("utf-8")
     request = urllib.request.Request(
@@ -1008,10 +1030,11 @@ def main() -> int:
             int(config.get("report_retention_days", 7)),
         )
         series = [[traffic["counts"][hour][site] for hour in traffic["hours"]] for site in traffic["sites"]]
-        graph = chart_png(
+        graph = traffic_graph_png(
             int(config.get("traffic_width", 1200)),
             int(config.get("traffic_height", 600)),
             series,
+            int(config.get("traffic_max_png_bytes", 8000)),
         )
         write_binary_atomic(graph_path, graph)
         write_binary_atomic(latest_graph_path, graph)
