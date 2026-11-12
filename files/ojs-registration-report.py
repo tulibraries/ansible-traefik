@@ -579,11 +579,13 @@ def traffic_text(traffic: Optional[dict[str, Any]], compact: bool = False) -> li
         peak = max(traffic["hours"], key=lambda hour: (traffic["counts"][hour][site], hour), default=None)
         site_total = sum(traffic["counts"][hour][site] for hour in traffic["hours"])
         peak_count = traffic["counts"][peak][site] if peak else 0
-        lines.append(
-            f"- {markdown_cell(site)}: **{site_total:,} requests**; busiest hour: "
-            f"**{hour_label(peak, traffic['timezone'])}** ({peak_count:,} requests)"
-            if peak else f"- {markdown_cell(site)}: **0** requests"
-        )
+        if site_total and peak:
+            lines.append(
+                f"- {markdown_cell(site)}: **{site_total:,} requests**; busiest hour: "
+                f"**{hour_label(peak, traffic['timezone'])}** ({peak_count:,} requests)"
+            )
+        else:
+            lines.append(f"- {markdown_cell(site)}: **0** requests")
     return lines
 
 
