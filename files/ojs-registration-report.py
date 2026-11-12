@@ -345,12 +345,63 @@ def png_chunk(kind: bytes, data: bytes) -> bytes:
     )
 
 
-def chart_png(width: int, height: int, series: list[list[int]]) -> bytes:
-    """Create a small dependency-free line chart as an RGB PNG.
+FONT_5X7 = {
+    "A": ("01110", "10001", "10001", "11111", "10001", "10001", "10001"),
+    "B": ("11110", "10001", "10001", "11110", "10001", "10001", "11110"),
+    "C": ("01111", "10000", "10000", "10000", "10000", "10000", "01111"),
+    "D": ("11110", "10001", "10001", "10001", "10001", "10001", "11110"),
+    "E": ("11111", "10000", "10000", "11110", "10000", "10000", "11111"),
+    "F": ("11111", "10000", "10000", "11110", "10000", "10000", "10000"),
+    "G": ("01111", "10000", "10000", "10111", "10001", "10001", "01111"),
+    "H": ("10001", "10001", "10001", "11111", "10001", "10001", "10001"),
+    "I": ("11111", "00100", "00100", "00100", "00100", "00100", "11111"),
+    "J": ("00111", "00010", "00010", "00010", "10010", "10010", "01100"),
+    "K": ("10001", "10010", "10100", "11000", "10100", "10010", "10001"),
+    "L": ("10000", "10000", "10000", "10000", "10000", "10000", "11111"),
+    "M": ("10001", "11011", "10101", "10101", "10001", "10001", "10001"),
+    "N": ("10001", "11001", "10101", "10011", "10001", "10001", "10001"),
+    "O": ("01110", "10001", "10001", "10001", "10001", "10001", "01110"),
+    "P": ("11110", "10001", "10001", "11110", "10000", "10000", "10000"),
+    "Q": ("01110", "10001", "10001", "10001", "10101", "10010", "01101"),
+    "R": ("11110", "10001", "10001", "11110", "10100", "10010", "10001"),
+    "S": ("01111", "10000", "10000", "01110", "00001", "00001", "11110"),
+    "T": ("11111", "00100", "00100", "00100", "00100", "00100", "00100"),
+    "U": ("10001", "10001", "10001", "10001", "10001", "10001", "01110"),
+    "V": ("10001", "10001", "10001", "10001", "10001", "01010", "00100"),
+    "W": ("10001", "10001", "10001", "10101", "10101", "11011", "10001"),
+    "X": ("10001", "10001", "01010", "00100", "01010", "10001", "10001"),
+    "Y": ("10001", "10001", "01010", "00100", "00100", "00100", "00100"),
+    "Z": ("11111", "00001", "00010", "00100", "01000", "10000", "11111"),
+    "0": ("01110", "10001", "10011", "10101", "11001", "10001", "01110"),
+    "1": ("00100", "01100", "00100", "00100", "00100", "00100", "01110"),
+    "2": ("01110", "10001", "00001", "00010", "00100", "01000", "11111"),
+    "3": ("11110", "00001", "00001", "01110", "00001", "00001", "11110"),
+    "4": ("00010", "00110", "01010", "10010", "11111", "00010", "00010"),
+    "5": ("11111", "10000", "10000", "11110", "00001", "00001", "11110"),
+    "6": ("01110", "10000", "10000", "11110", "10001", "10001", "01110"),
+    "7": ("11111", "00001", "00010", "00100", "01000", "01000", "01000"),
+    "8": ("01110", "10001", "10001", "01110", "10001", "10001", "01110"),
+    "9": ("01110", "10001", "10001", "01111", "00001", "00001", "01110"),
+    " ": ("00000",) * 7,
+    ".": ("00000",) * 6 + ("00100",),
+    ":": ("00000", "00100", "00100", "00000", "00100", "00100", "00000"),
+    "/": ("00001", "00010", "00010", "00100", "01000", "01000", "10000"),
+    "-": ("00000", "00000", "00000", "11111", "00000", "00000", "00000"),
+    "(": ("00010", "00100", "01000", "01000", "01000", "00100", "00010"),
+    ")": ("01000", "00100", "00010", "00010", "00010", "00100", "01000"),
+    ",": ("00000", "00000", "00000", "00000", "00000", "00100", "01000"),
+    "?": ("01110", "10001", "00001", "00010", "00100", "00000", "00100"),
+}
 
-    Labels and the legend are sent as text in the Adaptive Card. Keeping the
-    bitmap renderer here avoids requiring matplotlib on the Traefik host.
-    """
+
+def chart_png(
+    width: int,
+    height: int,
+    series: list[list[int]],
+    site_names: list[str],
+    x_labels: list[str],
+) -> bytes:
+    """Create a labeled, dependency-free line chart as an RGB PNG."""
     width = min(1024, max(320, int(width)))
     height = min(1024, max(180, int(height)))
     pixels = bytearray([255] * (width * height * 3))
@@ -359,6 +410,21 @@ def chart_png(width: int, height: int, series: list[list[int]]) -> bytes:
         if 0 <= x < width and 0 <= y < height:
             offset = (y * width + x) * 3
             pixels[offset : offset + 3] = bytes(color)
+
+    def rectangle(x: int, y: int, rectangle_width: int, rectangle_height: int, color: tuple[int, int, int]) -> None:
+        for yy in range(y, y + rectangle_height):
+            for xx in range(x, x + rectangle_width):
+                pixel(xx, yy, color)
+
+    def text(x: int, y: int, value: str, color: tuple[int, int, int], scale: int = 1) -> None:
+        cursor = x
+        for character in value.upper():
+            glyph = FONT_5X7.get(character, FONT_5X7["?"])
+            for row, bits in enumerate(glyph):
+                for column, bit in enumerate(bits):
+                    if bit == "1":
+                        rectangle(cursor + column * scale, y + row * scale, scale, scale, color)
+            cursor += 6 * scale
 
     def line(x1: int, y1: int, x2: int, y2: int, color: tuple[int, int, int], thickness: int = 1) -> None:
         dx = abs(x2 - x1)
@@ -372,27 +438,49 @@ def chart_png(width: int, height: int, series: list[list[int]]) -> bytes:
                 for xx in range(x - radius, x + radius + 1):
                     pixel(xx, yy, color)
 
-    margin_left, margin_right = 64, 28
-    margin_top, margin_bottom = 24, 48
+    title_scale = 2 if width >= 440 else 1
+    title = "OJS REQUESTS / HOUR - LAST 24H"
+    margin_left, margin_right = 42, 14
+    legend_top = 24 if title_scale == 2 else 18
+    legend_row_height = 10
+    margin_top = max(58, legend_top + len(site_names) * legend_row_height + 8)
+    margin_bottom = 34
     plot_width = width - margin_left - margin_right
     plot_height = height - margin_top - margin_bottom
     max_value = max((value for values in series for value in values), default=0)
     scale = max(1, max_value)
     grid = (226, 230, 235)
     axis = (120, 128, 138)
+    label = (74, 82, 92)
+    text(8, 4, title, (35, 43, 52), title_scale)
+
+    colors = [(31, 111, 235), (222, 79, 58), (39, 148, 90), (151, 91, 201), (214, 137, 32)]
+    for index, site_name in enumerate(site_names):
+        color = colors[index % len(colors)]
+        legend_y = legend_top + index * legend_row_height
+        rectangle(8, legend_y + 2, 8, 6, color)
+        text(20, legend_y, site_name, label, 1)
 
     for row in range(6):
         y = margin_top + round(plot_height * row / 5)
         line(margin_left, y, width - margin_right, y, grid)
+        tick_value = round(max_value * (5 - row) / 5)
+        tick_text = f"{tick_value:,}"
+        text(max(1, margin_left - len(tick_text) * 6 - 4), y - 3, tick_text, label, 1)
+    text(3, margin_top - 15, "REQUESTS", label, 1)
     point_count = max((len(values) for values in series), default=0)
     if point_count > 1:
         for column in range(point_count):
             x = margin_left + round(plot_width * column / (point_count - 1))
             line(x, margin_top, x, height - margin_bottom, grid)
+        label_indices = sorted({round(index * (point_count - 1) / 5) for index in range(6)})
+        for index in label_indices:
+            x = margin_left + round(plot_width * index / (point_count - 1))
+            value = x_labels[index] if index < len(x_labels) else ""
+            text(max(margin_left, x - len(value) * 3), height - margin_bottom + 9, value, label, 1)
     line(margin_left, margin_top, margin_left, height - margin_bottom, axis, 2)
     line(margin_left, height - margin_bottom, width - margin_right, height - margin_bottom, axis, 2)
 
-    colors = [(31, 111, 235), (222, 79, 58), (39, 148, 90), (151, 91, 201), (214, 137, 32)]
     for index, values in enumerate(series):
         if not values:
             continue
@@ -421,6 +509,8 @@ def traffic_graph_png(
     width: int,
     height: int,
     series: list[list[int]],
+    site_names: list[str],
+    x_labels: list[str],
     max_bytes: int,
 ) -> bytes:
     """Render the chart, shrinking it until it fits the Teams payload budget."""
@@ -428,7 +518,7 @@ def traffic_graph_png(
     height = min(1024, max(180, int(height)))
     max_bytes = max(2000, int(max_bytes))
     while True:
-        graph = chart_png(width, height, series)
+        graph = chart_png(width, height, series, site_names, x_labels)
         if len(graph) <= max_bytes or (width == 320 and height == 180):
             return graph
         width = max(320, width * 3 // 4)
@@ -485,16 +575,15 @@ def traffic_text(traffic: Optional[dict[str, Any]], compact: bool = False) -> li
     if peak_hour is None:
         lines.append("- No requests were observed for the configured OJS sites.")
         return lines
-    lines.extend([
-        f"- Requests observed: **{sum(traffic['totals'].values()):,}**",
-        f"- Busiest hour: **{hour_label(peak_hour, traffic['timezone'])}** ({traffic['peak_total']:,} requests)",
-    ])
     for site in traffic["sites"]:
         peak = max(traffic["hours"], key=lambda hour: (traffic["counts"][hour][site], hour), default=None)
-        count = traffic["counts"][peak][site] if peak else 0
-        lines.append(f"- {markdown_cell(site)} busiest hour: **{hour_label(peak, traffic['timezone'])}** ({count:,} requests)" if peak else f"- {markdown_cell(site)}: **0** requests")
-    colors = ("blue", "red", "green", "purple", "orange")
-    lines.append("- Graph series: " + ", ".join(f"{colors[index % len(colors)]} = {site}" for index, site in enumerate(traffic["sites"])))
+        site_total = sum(traffic["counts"][hour][site] for hour in traffic["hours"])
+        peak_count = traffic["counts"][peak][site] if peak else 0
+        lines.append(
+            f"- {markdown_cell(site)}: **{site_total:,} requests**; busiest hour: "
+            f"**{hour_label(peak, traffic['timezone'])}** ({peak_count:,} requests)"
+            if peak else f"- {markdown_cell(site)}: **0** requests"
+        )
     return lines
 
 
@@ -537,6 +626,10 @@ def teams_summary(
         "",
         f"Reporting period: **{local_time(start, timezone)} through {local_time(end, timezone)}**",
         "",
+    ]
+    if traffic:
+        lines.extend([*traffic_text(traffic, compact=True), ""])
+    lines.extend([
         "**Summary**",
         "",
         f"- Registration attempts: **{len(registrations)}** (observed POST requests)",
@@ -551,7 +644,7 @@ def teams_summary(
         "",
         "| Site | Journal | Attempts |",
         "| --- | --- | ---: |",
-    ]
+    ])
     if by_site_journal:
         lines.extend(
             f"| {markdown_cell(site)} | {markdown_cell(journal)} | {count} |"
@@ -559,9 +652,6 @@ def teams_summary(
         )
     else:
         lines.append("| - | - | 0 |")
-
-    if traffic:
-        lines.extend(["", *traffic_text(traffic, compact=True)])
 
     lines.extend(["", "**Activity to review**", ""])
     if repeated:
@@ -638,13 +728,13 @@ def send_to_teams(
                     "type": "AdaptiveCard",
                     "version": "1.2",
                     "body": [
-                        {"type": "TextBlock", "text": summary, "wrap": True},
                         {
                             "type": "Image",
                             "url": f"data:image/png;base64,{graph}",
                             "altText": "OJS requests per hour during the reporting period",
                             "size": "Stretch",
                         },
+                        {"type": "TextBlock", "text": summary, "wrap": True},
                     ],
                 },
             }],
@@ -1034,6 +1124,8 @@ def main() -> int:
             int(config.get("traffic_width", 1200)),
             int(config.get("traffic_height", 600)),
             series,
+            traffic["sites"],
+            [hour.astimezone(traffic["timezone"]).strftime("%I%p").lstrip("0") for hour in traffic["hours"]],
             int(config.get("traffic_max_png_bytes", 8000)),
         )
         write_binary_atomic(graph_path, graph)
