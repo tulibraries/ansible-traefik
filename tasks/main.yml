@@ -129,6 +129,8 @@
         name:
           - python3
           - cronie
+          - python3-pillow
+          - dejavu-sans-fonts
         state: present
 
     - name: Ensure cron daemon is running
