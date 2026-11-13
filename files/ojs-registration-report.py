@@ -14,6 +14,7 @@ import collections
 import datetime as dt
 import gzip
 import glob
+import io
 import ipaddress
 import json
 import os
@@ -505,12 +506,100 @@ def chart_png(
     )
 
 
+def labeled_chart_png(
+    width: int,
+    height: int,
+    series: list[list[int]],
+    site_names: list[str],
+    x_labels: list[str],
+    font_path: str,
+) -> bytes:
+    """Create a readable chart using a real TrueType font."""
+    from PIL import Image, ImageDraw, ImageFont
+
+    width = min(1024, max(320, int(width)))
+    height = min(1024, max(180, int(height)))
+    image = Image.new("RGB", (width, height), "white")
+    draw = ImageDraw.Draw(image)
+    title_size = max(14, min(20, width // 24))
+    small_size = max(8, min(11, width // 48))
+    title_font = ImageFont.truetype(font_path, title_size)
+    small_font = ImageFont.truetype(font_path, small_size)
+    title = "OJS requests per hour — last 24 hours"
+    title_box = draw.textbbox((0, 0), title, font=title_font)
+    draw.text((8, 4), title, fill=(35, 43, 52), font=title_font)
+
+    colors = [(31, 111, 235), (222, 79, 58), (39, 148, 90), (151, 91, 201), (214, 137, 32)]
+    legend_top = title_box[3] + 8
+    legend_row_height = small_size + 4
+    for index, site_name in enumerate(site_names):
+        color = colors[index % len(colors)]
+        legend_y = legend_top + index * legend_row_height
+        draw.rectangle((8, legend_y + 3, 16, legend_y + 3 + small_size - 2), fill=color)
+        draw.text((21, legend_y), site_name, fill=(74, 82, 92), font=small_font)
+
+    margin_left, margin_right = 52, 14
+    margin_top = max(58, legend_top + len(site_names) * legend_row_height + 8)
+    margin_bottom = 36
+    plot_width = width - margin_left - margin_right
+    plot_height = height - margin_top - margin_bottom
+    max_value = max((value for values in series for value in values), default=0)
+    scale = max(1, max_value)
+    grid = (226, 230, 235)
+    axis = (120, 128, 138)
+    label = (74, 82, 92)
+
+    for row in range(6):
+        y = margin_top + round(plot_height * row / 5)
+        draw.line((margin_left, y, width - margin_right, y), fill=grid, width=1)
+        tick_value = round(max_value * (5 - row) / 5)
+        tick_text = f"{tick_value:,}"
+        tick_box = draw.textbbox((0, 0), tick_text, font=small_font)
+        draw.text((max(1, margin_left - (tick_box[2] - tick_box[0]) - 6), y - small_size // 2 - 2), tick_text, fill=label, font=small_font)
+    draw.text((4, margin_top - small_size - 5), "Requests", fill=label, font=small_font)
+
+    point_count = max((len(values) for values in series), default=0)
+    if point_count > 1:
+        for column in range(point_count):
+            x = margin_left + round(plot_width * column / (point_count - 1))
+            draw.line((x, margin_top, x, height - margin_bottom), fill=grid, width=1)
+        label_indices = sorted({round(index * (point_count - 1) / 5) for index in range(6)})
+        for index in label_indices:
+            x = margin_left + round(plot_width * index / (point_count - 1))
+            value = x_labels[index] if index < len(x_labels) else ""
+            value_box = draw.textbbox((0, 0), value, font=small_font)
+            draw.text((max(margin_left, x - (value_box[2] - value_box[0]) // 2), height - margin_bottom + 8), value, fill=label, font=small_font)
+    draw.line((margin_left, margin_top, margin_left, height - margin_bottom), fill=axis, width=2)
+    draw.line((margin_left, height - margin_bottom, width - margin_right, height - margin_bottom), fill=axis, width=2)
+
+    line_width = max(2, width // 240)
+    point_radius = max(2, width // 160)
+    for index, values in enumerate(series):
+        if not values:
+            continue
+        color = colors[index % len(colors)]
+        points = []
+        for point, value in enumerate(values):
+            x = margin_left if len(values) == 1 else margin_left + round(plot_width * point / (len(values) - 1))
+            y = height - margin_bottom - round(plot_height * value / scale)
+            points.append((x, y))
+        if len(points) > 1:
+            draw.line(points, fill=color, width=line_width, joint="curve")
+        for x, y in points:
+            draw.ellipse((x - point_radius, y - point_radius, x + point_radius, y + point_radius), fill=color)
+
+    output = io.BytesIO()
+    image.save(output, format="PNG", optimize=True)
+    return output.getvalue()
+
+
 def traffic_graph_png(
     width: int,
     height: int,
     series: list[list[int]],
     site_names: list[str],
     x_labels: list[str],
+    font_path: str,
     max_bytes: int,
 ) -> bytes:
     """Render the chart, shrinking it until it fits the Teams payload budget."""
@@ -518,7 +607,7 @@ def traffic_graph_png(
     height = min(1024, max(180, int(height)))
     max_bytes = max(2000, int(max_bytes))
     while True:
-        graph = chart_png(width, height, series, site_names, x_labels)
+        graph = labeled_chart_png(width, height, series, site_names, x_labels, font_path)
         if len(graph) <= max_bytes or (width == 320 and height == 180):
             return graph
         width = max(320, width * 3 // 4)
@@ -1128,6 +1217,7 @@ def main() -> int:
             series,
             traffic["sites"],
             [hour.astimezone(traffic["timezone"]).strftime("%I%p").lstrip("0") for hour in traffic["hours"]],
+            str(config.get("traffic_font_path", "/usr/share/fonts/dejavu/DejaVuSans.ttf")),
             int(config.get("traffic_max_png_bytes", 8000)),
         )
         write_binary_atomic(graph_path, graph)
